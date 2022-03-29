@@ -1,0 +1,66 @@
+.col,
+.col-2,
+.col-8 {
+    border: 5px solid red;
+    box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
+}
+
+.row {
+    border: 5px solid red;
+    box-shadow: rgba(99, 99, 99, .2) 0 2px 8px 0;
+
+
+}
+
+.pink {
+    background-color: pink;
+}
+
+.h1 {
+    text-align: center;
+}
+
+.noborder {
+    border: 0px;
+}
+
+.subnavItem {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 15px;
+    border-radius: 7px;
+    min-width: 320px;
+    min-height: 80px;
+    background: linear-gradient(26deg, #ffffff, #ffffff);
+    margin: 15px;
+    transition: all ease-in-out 0.3s;
+    overflow: hidden;
+}
+
+.submainNav {
+    margin-left: 0px !important;
+}
+
+.subnavItem:before,
+.subnavItem:after {
+    position: absolute;
+    content: "";
+    transform: scale(0);
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: #ffffff1a;
+    transition: all ease-in-out 0.4s;
+    left: -25%;
+    bottom: -10%;
+    box-shadow: 0 0 15px #0000000f;
+}
+
+.subnavItem h3 {
+    font-size: 14px;
+    font-weight: 300;
+    color: #000;
+    font-weight: 600;
+    margin-top: 10px;
+}

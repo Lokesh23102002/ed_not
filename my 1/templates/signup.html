@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stye.css' %}">
+</head>
+
+<body>
+    <div class="main">
+        <div class="signup">
+            <div class="login_logo">
+                <h1>Easy guidance app</h1>
+            </div>
+            <h1>
+                Sign up
+            </h1>
+            <div>
+                {% for message in messages %}
+                <h3>{{message}}</h3>
+                {% endfor %}
+            </div>
+
+            <div class="sidebyside">
+                <div class="first">
+
+                    <h3>Basic Details</h3>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <label for="">Name</label><br>
+                        <input type="text" name="name" class="inputboxs" required><br><br>
+                        <label for="">Surname</label><br>
+                        <input type="text" name="surname" class="inputboxs" required><br><br>
+                        <label for="">E-mail</label><br>
+                        <input type="text" name="email" class="inputboxs" required><br><br>
+                        <label for="">Phone no</label><br>
+                        <input type="" name="phoneno" class="inputboxs" maxlength="10" required><br><br>
+                        <label for="">DOB</label><br>
+                        <input type="date" name="dob" class="inputboxs" required>
+
+
+                </div>
+                <div class="second">
+                    <h3>Create login credential</h3>
+                    <label for="">Username</label><br>
+                    <input type="text" name="username" class="inputboxs" required><br><br>
+                    <label for="">Password</label><br>
+                    <input type="password" name="password" class="inputboxs" id="password" required><br><br>
+                    <label for="">Confirm Password</label><br>
+                    <input type="password" class="inputboxs" id="confirmpassword" onkeyup='check();' required /><span
+                        id='message'></span><br><br>
+                    <label for="">Recover question?</label><br>
+                    <input type="text" name="rques" class="inputboxs" required><br><br>
+                    <label for="">Recovery answer</label><br>
+                    <input type="text" name="rans" class="inputboxs" required>
+                    <input type="file" name="photo" id="">
+
+
+
+                </div>
+            </div>
+            <div>
+
+                <input type="submit" value="Submit" class="click">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        var check = function () {
+            if (document.getElementById('password').value ==
+                document.getElementById('confirmpassword').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'matching';
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'not matching';
+            }
+        }
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stye.css' %}">
+</head>
+
+<body>
+    </div>
+    <div class="main">
+        <div class="sign_in">
+            <div class="login_logo">
+                <h1>Easy guidance app</h1>
+            </div>
+            <div class="login_logo">
+                <h1>Login</h1>
+            </div><br><br>
+            <div>
+                {% for message in messages %}
+                <h3>{{message}}</h3>
+                {% endfor %}
+            </div>
+            <div class="login_credential">
+                <form action="" method='POST'>
+                    {%csrf_token%}
+                    <label>Username</label><br>
+                    <input type="text" id="Login_username" name="user" class="inputbox" required><br><br>
+                    <label>Password</label><br>
+                    <input type="password" id="password" name="passw" class="inputbox" required><br>
+                    <div class="righttext"><a href="Flex.html">Forgot password?</a><br><br></div>
+                    <button id="button" class="click">Login</button>
+                </form><br><br>
+
+
+
+                <div class="cetertext">
+                    <br><br><label>Don't Have an account?</label><br>
+                    <a href='signup'>Create an account</a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>

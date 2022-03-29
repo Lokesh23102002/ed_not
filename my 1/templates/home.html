@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
+<html lang="en" dir="ltr">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="cache-control" content="no-cache" />
+  <title> Responsive Sidebar Menu | CodingLab </title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="{% static 'css.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+
+      <div class="logo_name">Easy guidance app</div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <i class='bx bx-search'></i>
+        <input type="text" placeholder="Search...">
+        <span class="tooltip">Search</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+        <span class="tooltip">Dashboard</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-user'></i>
+          <span class="links_name">User</span>
+        </a>
+        <span class="tooltip">User</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-chat'></i>
+          <span class="links_name">Messages</span>
+        </a>
+        <span class="tooltip">Messages</span>
+      </li>
+
+      <li>
+        <a href="#">
+          <i class='bx bx-heart'></i>
+          <span class="links_name">Saved</span>
+        </a>
+        <span class="tooltip">Saved</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cog'></i>
+          <span class="links_name">Setting</span>
+        </a>
+        <span class="tooltip">Setting</span>
+      </li>
+      <li class="profile">
+        <div class="profile-details">
+          <img src="{{ user.calc.image.url }}" alt="profileImg">
+          <div class="name_job">
+
+            <div class="name">Hello, {{ user.first_name }}</div>
+
+            <div class="job">Web designer</div>
+          </div>
+        </div>
+        <a href="signout">
+          <i class='bx bx-log-out' id="log_out"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!--table-->
+
+  <div class="home-section">
+    <div class="heading">
+      <h1>Profile</h1>
+    </div>
+    <div id="mainc">
+      <div class="pbox certificate">
+        hello
+      </div>
+      <div class="pbox general">
+
+        <div class="main-content">
+          <div class="pimage" onclick=""><img src="{{ user.calc.image.url }}" alt=""></div>
+          <!--form for image upload-->
+          <form action="" method='POST' enctype="multipart/form-data">
+            {%csrf_token%}
+            <input type="file" name="upload" accept="image/*">
+
+            <button>hello</button>
+          </form>
+          <div class="text-info">
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <div class="contact">
+
+              <div class="table"><label for=""><strong>Email:-</strong></label><br>
+                <p>{{ user.email }}</p>
+              </div>
+              <div class="table"><label for=""><strong>Phone no:-</strong></label><br>
+                <p>+91 {{ user.calc.mobile }}</p>
+              </div>
+              <div class="table"><label for=""><strong>DOB:-</strong></label><br>
+                <p>{{ user.calc.birthday|date:"d,F,Y" }}
+              </div>
+
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="pbox rating">
+
+      </div>
+
+
+    </div>
+
+
+
+    </section>
+
+    <script src="{% static 'script.js' %}"></script>
+
+</body>
+
+</html>

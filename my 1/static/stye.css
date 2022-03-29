@@ -1,0 +1,107 @@
+.main {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #eceff1;
+    overflow-y: auto;
+}
+
+.sign_in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 65vh;
+    width: 25vw;
+    background-color: white;
+    min-height: 300px;
+    overflow-y: auto;
+}
+
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 85vh;
+    width: 75vw;
+    background-color: white;
+    min-height: 300px;
+    overflow-y: auto;
+}
+
+.login_credential {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+.login_logo {
+    text-align: center;
+    margin: 0px;
+
+}
+
+.click {
+    height: 30px;
+    width: 150px;
+    background-color: red;
+}
+
+.cetertext {
+    text-align: center;
+}
+
+.righttext {
+    text-align: right;
+}
+
+.sidebyside {
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+    min-width: 40vw;
+    min-height: 40vh;
+    margin-bottom: 20px;
+}
+
+.first {
+    background-color: aqua;
+    height: 54vh;
+    width: 30vw;
+    text-align: left;
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+
+.second {
+    background-color: pink;
+    height: 54vh;
+    width: 30vw;
+    text-align: left;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.inputbox {
+    padding: 6px;
+    width: 100%;
+}
+
+.inputboxs {
+    padding: 6px;
+    width: 70%;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
+}
+
+h3 {
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
