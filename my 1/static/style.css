@@ -38,6 +38,7 @@
 
 .sidebar .logo-details .logo_name {
   color: #fff;
+  padding-left: 15px;
   font-size: 20px;
   font-weight: 600;
   opacity: 0;
@@ -207,7 +208,6 @@
   background: #1d1b31;
   transition: all 0.5s ease;
   overflow: hidden;
-
 }
 
 .sidebar.open li.profile {
@@ -224,9 +224,8 @@
   height: 45px;
   width: 45px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 50%;
   margin-right: 10px;
-  background-color: #fff;
 }
 
 .sidebar li.profile .name,
@@ -260,9 +259,12 @@
 }
 
 .home-section {
+  display: flex;
+  flex-direction: column;
   position: relative;
   background: #E4E9F7;
   min-height: 100vh;
+  overflow: hidden;
   top: 0;
   left: 78px;
   width: calc(100% - 78px);
@@ -370,7 +372,6 @@
   height: 150px;
   width: 150px;
   margin-top: -75px;
-
 }
 
 .pimage img {
@@ -379,7 +380,6 @@
   width: 150px;
   border: 2px solid grey;
   border-radius: 50%;
-  background-color: #fff;
 
 }
 
@@ -422,4 +422,39 @@
 
 .table:hover {
   box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+}
+
+#profilechangeform {
+  display: none;
+}
+
+#profile_image:hover+#profilechangeform,
+#profilechangeform:hover {
+  display: flex;
+  position: absolute;
+  padding: 10px;
+  margin-left: 300px;
+  margin-top: 30px;
+  background-color: #d6d4ec;
+  width: 350px;
+  max-height: 70vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#blah {
+  height: auto;
+  width: 100%;
+  max-height: 55vh;
+}
+
+.button {
+  background-color: rgb(7, 155, 4);
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  opacity: 0.8;
+  width: 100%;
 }

@@ -92,14 +92,24 @@
       <div class="pbox general">
 
         <div class="main-content">
-          <div class="pimage" onclick=""><img src="{{ user.calc.image.url }}" alt=""></div>
+          <div class="pimage" id="profile_image" onclick=""><img src="{{ user.calc.image.url }}" alt=""></div>
           <!--form for image upload-->
-          <form action="" method='POST' enctype="multipart/form-data">
-            {%csrf_token%}
-            <input type="file" name="upload" accept="image/*">
-
-            <button>hello</button>
-          </form>
+          <div id="profilechangeform">
+            <form action="" method='POST' enctype="multipart/form-data">
+              {% csrf_token %}
+              <img id="blah" src="{{ user.calc.image.url }}" alt="your image" /><br>
+              <input id="imgInp" type="file" name="upload" accept="image/*"><br>
+              <button class="button">Submit</button>
+              <script>
+                imgInp.onchange = evt => {
+                  const [file] = imgInp.files
+                  if (file) {
+                    blah.src = URL.createObjectURL(file)
+                  }
+                }
+              </script>
+            </form>
+          </div>
           <div class="text-info">
             <h2>{{ user.first_name }} {{ user.last_name }}</h2>
             <div class="contact">
@@ -128,7 +138,7 @@
 
       </div>
 
-lok
+
     </div>
 
 
