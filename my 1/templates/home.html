@@ -28,14 +28,14 @@
         <span class="tooltip">Search</span>
       </li>
       <li>
-        <a href="#">
+        <a href="/Guide">
           <i class='bx bx-grid-alt'></i>
           <span class="links_name">Dashboard</span>
         </a>
         <span class="tooltip">Dashboard</span>
       </li>
       <li>
-        <a href="#">
+        <a href="/dash">
           <i class='bx bx-user'></i>
           <span class="links_name">User</span>
         </a>
@@ -66,6 +66,7 @@
       <li class="profile">
         <div class="profile-details">
           <img src="{{ user.calc.image.url }}" alt="profileImg">
+
           <div class="name_job">
 
             <div class="name">Hello, {{ user.first_name }}</div>
@@ -82,6 +83,7 @@
   <!--table-->
 
   <div class="home-section">
+    {% block content %}
     <div class="heading">
       <h1>Profile</h1>
     </div>
@@ -92,12 +94,14 @@
       <div class="pbox general">
 
         <div class="main-content">
-          <div class="pimage" id="profile_image" onclick=""><img src="{{ user.calc.image.url }}" alt=""></div>
+          <div class="pimage" id="profile_image" onclick="">
+            <img src="{{ user.calc.image.url }}" alt=""></div>
           <!--form for image upload-->
           <div id="profilechangeform">
-            <form action="" method='POST' enctype="multipart/form-data">
+            <form action="" method='POST' enctype="multipart/form-data" name="picchange">
               {% csrf_token %}
-              <img id="blah" src="{{ user.calc.image.url }}" alt="your image" /><br>
+
+              <img id="blah" src="{{ user.calc.image.url }}" alt="your image">
               <input id="imgInp" type="file" name="upload" accept="image/*"><br>
               <button class="button">Submit</button>
               <script>
@@ -143,9 +147,11 @@
 
 
 
-    </section>
+    {%endblock content%}
 
-    <script src="{% static 'script.js' %}"></script>
+  </div>
+  <script src="{% static 'script.js' %}"></script>
+
 
 </body>
 

@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from sympy import Q
+
+from my.settings import BASE_DIR
 from .models import calc
 from django.conf import settings
 from django.core.mail import send_mail
@@ -54,16 +56,14 @@ def dash(request):
     if request.method == 'POST' and request.FILES.get('upload'):
         upload = request.FILES.get('upload')
         instance=request.user
-        instance.calc.image.delete()
+        print(str(BASE_DIR))
+        if(instance.calc.image.path != (str(BASE_DIR) + "\media\profile.png")):
+            instance.calc.image.delete()
         instance.calc.image = upload
         instance.calc.save()
-        print(instance.calc.image.path)
 
-        return redirect('home')
-        
-        
-
-
+        return redirect('dash')
+    
     return render(request , "home.html")
 
 def signup(request):
@@ -76,10 +76,8 @@ def signup(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         email=request.POST.get("email")
-        rques = request.POST.get("rques")
-        rans = request.POST.get("rans")
-        photo = request.POST.get("photo")
-
+        
+        
         if User.objects.filter(username=username).first() and User.objects.filter(email=email).first():
             messages.error(request, 'Username and email already exist')
             return redirect('signup')
@@ -97,7 +95,7 @@ def signup(request):
         user.last_name = surname
         user.save()
         tokens=str(uuid.uuid4())
-        extra = calc(user=user,mobile=phoneno,rans=rans,rques=rques,birthday=dob,token=tokens)
+        extra = calc(user=user,mobile=phoneno,birthday=dob,token=tokens)
         extra.save()
 
         sendmail(email,tokens)
@@ -110,8 +108,8 @@ def signout(request):
     auth.logout(request)
     return redirect('home')
 
-def main(request):
-    return render(request, "home.html")
+def guide(request):
+    return render(request,"Guide.html")
 
 def sendmail(email,token):
     subject = "your account needs to be verified"

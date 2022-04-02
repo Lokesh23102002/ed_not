@@ -6,6 +6,6 @@ urlpatterns = [
     path('signup/',views.signup,name="signup"),
     path('signout',views.signout,name="signout"),
     path('dash',views.dash,name="dash"),
-    path('main',views.main,name="main"),
+    path('Guide',views.guide,name="guide"),
     path('verify/<token>' , views.verify , name="verify")
 ]
