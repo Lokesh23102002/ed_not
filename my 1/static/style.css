@@ -458,3 +458,7 @@
   opacity: 0.8;
   width: 100%;
 }
+
+.option {
+  border: 5px solid blue;
+}

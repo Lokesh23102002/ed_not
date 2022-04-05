@@ -2,19 +2,21 @@ from fnmatch import fnmatchcase
 from lib2to3.pgen2 import token
 import uuid
 from django import http
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.urls import reverse_lazy
 from sympy import Q
-
+from django.views.decorators.cache import never_cache
 from my.settings import BASE_DIR
-from .models import calc
+from .models import calc,fields
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.files.storage import FileSystemStorage
-# Create your views here.
+# Create your views here
+@never_cache
 def home(request):
     my_user = request.user
 
@@ -39,7 +41,7 @@ def home(request):
                 return redirect('home')
             else:
                 auth.login(request,user)
-                return redirect('dash')   
+                return HttpResponseRedirect(reverse_lazy('dash'))   
                 
         else:
             messages.success(request, 'Invalid credentials try again')
@@ -109,8 +111,14 @@ def signout(request):
     return redirect('home')
 
 def guide(request):
-    return render(request,"Guide.html")
-
+    if request.method=="POST":
+    
+        pass
+    
+    guides = fields.objects.all()
+    context = {'fields':guides}
+    return render(request,"Guide.html",context)
+    
 def sendmail(email,token):
     subject = "your account needs to be verified"
     message = f'Hi paste the link to verify your account http://127.0.0.1:8000/verify/{token}' 

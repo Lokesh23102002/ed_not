@@ -1,6 +1,30 @@
 {% extends "home.html" %}
 {% block content %}
- <div class="heading">
-      <h1>Guide</h1>
-    </div>
- {% endblock content %}
+<div class="heading">
+  <h1>Guide</h1>
+</div>
+<ul>
+  {% for i in user.calc.fdsneeded.all %}
+  <li>{{i}}</li>
+  {% endfor %}
+</ul>
+
+
+<div>
+  <form method="post">
+    {% csrf_token %}
+
+    {%for i in fields.all%}
+    {% if i not in user.calc.fdsexpert.all  %}
+    <label for="">{{i}}</label>
+    <input type="radio" value='{{i}}' class="option"><br>
+
+    {% endif %}
+    {%endfor%}
+
+    </select>
+    <input type='submit' name='submit' value=Submit>
+  </form>
+</div>
+
+{% endblock content %}
