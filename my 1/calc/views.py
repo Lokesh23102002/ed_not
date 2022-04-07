@@ -111,9 +111,15 @@ def signout(request):
     return redirect('home')
 
 def guide(request):
+    print(request.POST)
     if request.method=="POST":
-    
-        pass
+        for i in request.POST.getlist('fdsexpert'):
+            field=fields.objects.get(name=i)
+            request.user.calc.fdsexpert.add(field)
+            field.guides.add(request.user)
+            field.save()
+            request.user.calc.save()
+        
     
     guides = fields.objects.all()
     context = {'fields':guides}
@@ -140,4 +146,4 @@ def verify(request, token):
             return redirect('home')
     else:
         return HttpResponse('error')
-    
+

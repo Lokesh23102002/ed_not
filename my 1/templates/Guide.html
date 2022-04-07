@@ -1,10 +1,19 @@
 {% extends "home.html" %}
 {% block content %}
 <div class="heading">
-  <h1>Guide</h1>
+  <h1>Guidee</h1>
 </div>
 <ul>
   {% for i in user.calc.fdsneeded.all %}
+  <li>{{i}}</li>
+  {% endfor %}
+</ul>
+
+<div class="heading">
+  <h1>Guide</h1>
+</div>
+<ul>
+  {% for i in user.calc.fdsexpert.all %}
   <li>{{i}}</li>
   {% endfor %}
 </ul>
@@ -17,7 +26,7 @@
     {%for i in fields.all%}
     {% if i not in user.calc.fdsexpert.all  %}
     <label for="">{{i}}</label>
-    <input type="radio" value='{{i}}' class="option"><br>
+    <input type="checkbox" value='{{i}}'' name='fdsexpert'  class="option"><br>
 
     {% endif %}
     {%endfor%}
