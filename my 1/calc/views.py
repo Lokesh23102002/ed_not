@@ -113,12 +113,20 @@ def signout(request):
 def guide(request):
     print(request.POST)
     if request.method=="POST":
-        for i in request.POST.getlist('fdsexpert'):
-            field=fields.objects.get(name=i)
-            request.user.calc.fdsexpert.add(field)
-            field.guides.add(request.user)
-            field.save()
-            request.user.calc.save()
+        if 'submitx' in request.POST:
+            for i in request.POST.getlist('fdsexpert'):
+                field=fields.objects.get(name=i)
+                request.user.calc.fdsexpert.add(field)
+                field.guides.add(request.user)
+                field.save()
+                request.user.calc.save()
+        elif 'submitn' in request.POST:
+             for i in request.POST.getlist('fdsneeded'):
+                field=fields.objects.get(name=i)
+                request.user.calc.fdsneeded.add(field)
+                field.guidees.add(request.user)
+                field.save()
+                request.user.calc.save()
         
     
     guides = fields.objects.all()

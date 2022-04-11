@@ -9,6 +9,23 @@
   {% endfor %}
 </ul>
 
+<div>
+  <form method="post">
+    {% csrf_token %}
+
+    {%for i in fields.all%}
+    {% if i not in user.calc.fdsneeded.all  %}
+    <label for="">{{i}}</label>
+    <input type="checkbox" value='{{i}}' name='fdsneeded'  class="option"><br>
+
+    {% endif %}
+    {%endfor%}
+
+    </select>
+    <input type='submit' name='submitn' value='Submit'>
+  </form>
+</div>
+
 <div class="heading">
   <h1>Guide</h1>
 </div>
@@ -26,13 +43,13 @@
     {%for i in fields.all%}
     {% if i not in user.calc.fdsexpert.all  %}
     <label for="">{{i}}</label>
-    <input type="checkbox" value='{{i}}'' name='fdsexpert'  class="option"><br>
+    <input type="checkbox" value='{{i}}'name='fdsexpert'  class="option"><br>
 
     {% endif %}
     {%endfor%}
 
     </select>
-    <input type='submit' name='submit' value=Submit>
+    <input type='submit' name='submitx' value='Submit'>
   </form>
 </div>
 
