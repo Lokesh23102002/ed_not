@@ -38,10 +38,10 @@ def home(request):
         if user is not None :
             if profile_obj.is_varified == False:
                 messages.success(request, 'Your email has not been verified please verify your email')
-                return redirect('home')
+                return redirect('guide')
             else:
                 auth.login(request,user)
-                return HttpResponseRedirect(reverse_lazy('dash'))   
+                return HttpResponseRedirect(reverse_lazy('guide'))   
                 
         else:
             messages.success(request, 'Invalid credentials try again')
