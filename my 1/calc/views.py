@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from sympy import Q
 from django.views.decorators.cache import never_cache
 from my.settings import BASE_DIR
-from .models import calc,fields
+from .models import certificates, calc,fields
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.files.storage import FileSystemStorage
@@ -23,7 +23,7 @@ def home(request):
     is_user_logged = my_user.is_authenticated
 
     if is_user_logged == True:
-        return redirect('dash')
+        return redirect('guide')
     
     if request.method ==  "POST" :
         username= request.POST.get("user")
@@ -41,7 +41,7 @@ def home(request):
                 return redirect('guide')
             else:
                 auth.login(request,user)
-                return HttpResponseRedirect(reverse_lazy('guide'))   
+                return redirect('guide')
                 
         else:
             messages.success(request, 'Invalid credentials try again')
@@ -65,8 +65,10 @@ def dash(request):
         instance.calc.save()
 
         return redirect('dash')
+    cert = request.user.certificates_set.all()
     
-    return render(request , "home.html")
+    context={'certificate':cert}
+    return render(request , "home.html", context)
 
 def signup(request):
 
@@ -127,6 +129,20 @@ def guide(request):
                 field.guidees.add(request.user)
                 field.save()
                 request.user.calc.save()
+        elif 'remx' in request.POST:
+            i=request.POST.get('remx')
+            field=fields.objects.get(name=i)
+            request.user.calc.fdsexpert.remove(field)
+            field.guides.remove(request.user)
+            field.save()
+            request.user.calc.save()
+        elif 'remn' in request.POST:
+            i=request.POST.get('remn')
+            field=fields.objects.get(name=i)
+            request.user.calc.fdsneeded.remove(field)
+            field.guidees.remove(request.user)
+            field.save()
+            request.user.calc.save()
         
     
     guides = fields.objects.all()

@@ -8,6 +8,7 @@
   <meta http-equiv="cache-control" content="no-cache" />
   <title> Easy Guidance </title>
   <link rel="shortcut icon" type="image/png" href="{% static 'logo.png'%}">
+  {% block head %}{% endblock head %}
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <!-- Boxicons CDN Link -->
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -79,7 +80,14 @@
     </div>
     <div id="mainc">
       <div class="pbox certificate">
-        Certificates
+        <div class="headingcert">
+          Certificates
+        </div>
+        {%for i in user.certificates_set.all%}
+        <p>{{i.fd}}</p>
+        <embed src="{{i.certificate.url}}" width="100%" height="200px" />
+        {%endfor%}
+        <button id="addcert">Add Certificates</button>
       </div>
       <div class="pbox general">
 

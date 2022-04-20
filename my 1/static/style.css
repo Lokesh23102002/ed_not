@@ -29,6 +29,9 @@
   display: flex;
   align-items: center;
   position: relative;
+  margin-top: -6px;
+  margin-left: -14px;
+  width: 64px;
 }
 
 .sidebar .logo-details .icon {
@@ -474,4 +477,14 @@
 
 .option {
   border: 5px solid blue;
+}
+
+.headingcert {
+  background-color: #fff;
+  padding-top: 3px;
+  padding-left: 20px;
+  height: 30px;
+  font-size: large;
+  font-weight: 500;
+
 }

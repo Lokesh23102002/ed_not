@@ -1,56 +1,140 @@
 {% extends "home.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styleguide.css' %}">{% endblock head %}
 {% block content %}
-<div class="heading">
-  <h1>Guidee</h1>
+
+<div id="main_content" class="main">
+  <!--guidee section-->
+  <div class="heading">
+    <h1>Guidee</h1>
+  </div>
+  <div class="fieldnames">
+    <div class="list">
+      {% for i in user.calc.fdsneeded.all %}
+      <div class="ele">
+        <form action="" class="remform" method="post">{% csrf_token %}<button id="close" class="bx bx-x close"
+            name="remn" value="{{i}}">
+          </button></form>
+
+
+        <a href="index.html">{{i}}</a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+  <button id="guidee_field">Add Field</button>
+
+  <!--guidee section end-->
+  <!--guidee section start-->
+  <div class="heading">
+    <h1>Guide</h1>
+  </div>
+
+  <div class="fieldnames">
+
+    <div class="list">
+      {% for i in user.calc.fdsexpert.all %}
+      <div class="ele">
+        <form action="" class="remform" method="post"> {% csrf_token %} <button id="close" class="bx bx-x close"
+            name="remx" value="{{i}}"></button></form><a href="#">{{i}}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <button id="guide_field">Add Field</button>
 </div>
-<ul>
-  {% for i in user.calc.fdsneeded.all %}
-  <li>{{i}}</li>
-  {% endfor %}
-</ul>
+<!--guidee section end-->
+<!--guide section new field-->
+<div id="guide_new" class="popup ">
 
-<div>
-  <form method="post">
-    {% csrf_token %}
+  <div class="popupfornew">
+    <i id="closep" class="bx bx-x close"></i>
+    <h3>Select fields To guide</h3>
+    <form method="post">
+      {% csrf_token %}
+      <ul>
 
-    {%for i in fields.all%}
-    {% if i not in user.calc.fdsneeded.all  %}
-    <label for="">{{i}}</label>
-    <input type="checkbox" value='{{i}}' name='fdsneeded'  class="option"><br>
 
-    {% endif %}
-    {%endfor%}
+        {%for i in fields.all%}
+        {% if i not in user.calc.fdsexpert.all  %}
+        <li>
+          <label for="">{{i}}</label>
+          <input id="checkbox" type="checkbox" value='{{i}}' name='fdsexpert' class="option"><br>
+        </li>
+        {% endif %}
+        {%endfor%}
 
-    </select>
-    <input type='submit' name='submitn' value='Submit'>
-  </form>
+      </ul>
+
+
+
+      <input type='submit' name='submitx' value='Submit'>
+    </form>
+  </div>
 </div>
+<!--guide section new field end-->
+<!--guidee section new field -->
 
-<div class="heading">
-  <h1>Guide</h1>
+<div id="guidee_new" class="popup ">
+  <div class="popupfornew">
+    <i id="closep" class="bx bx-x close"></i>
+    <h3>Fields in which you want guidance</h3>
+    <form method="post">
+      <ul>
+        {% csrf_token %}
+
+        {%for i in fields.all%}
+        {% if i not in user.calc.fdsneeded.all  %}
+        <li> <label for="">{{i}}</label>
+          <input id="checkbox" type="checkbox" value='{{i}}' name='fdsneeded' class="option"><br>
+        </li>
+        {% endif %}
+        {%endfor%}
+      </ul>
+
+      <input type='submit' name='submitn' value='Submit'>
+    </form>
+  </div>
 </div>
-<ul>
-  {% for i in user.calc.fdsexpert.all %}
-  <li>{{i}}</li>
-  {% endfor %}
-</ul>
+<!--guide section new field end-->
+<script>
+  const guide_add = document.querySelector("#guide_new"),
+    guidee_add = document.querySelector("#guidee_new"),
+    guide_butt = document.querySelector("#guide_field"),
+    guidee_butt = document.querySelector("#guidee_field"),
+    closeBtng = document.querySelectorAll("#closep"),
+    mainc = document.querySelector("#main_content"),
+    check = document.querySelectorAll("#checkbox");
 
 
-<div>
-  <form method="post">
-    {% csrf_token %}
+  var checkboxes = document.getElementsByName('fdsexpert');
 
-    {%for i in fields.all%}
-    {% if i not in user.calc.fdsexpert.all  %}
-    <label for="">{{i}}</label>
-    <input type="checkbox" value='{{i}}'name='fdsexpert'  class="option"><br>
 
-    {% endif %}
-    {%endfor%}
+  guide_butt.addEventListener("click", () => {
+    guide_add.classList.add("open");
+    mainc.classList.add("closem");
+  });
 
-    </select>
-    <input type='submit' name='submitx' value='Submit'>
-  </form>
-</div>
+  guidee_butt.addEventListener("click", () => {
+    guidee_add.classList.add("open");
+    mainc.classList.add("closem");
+    check.checked = false;
+  });
 
+  closeBtng.forEach(cBtn => {
+    cBtn.addEventListener("click", () => {
+      guidee_add.classList.remove("open");
+      guide_add.classList.remove("open");
+      mainc.classList.remove("closem");
+
+      for (var checkbox of checkboxes) {
+        checkbox.checked = false;
+      }
+
+    });
+  });
+</script>
 {% endblock content %}

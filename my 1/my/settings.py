@@ -139,3 +139,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'eazyguidance@gmail.com'
 EMAIL_HOST_PASSWORD = 'ygduihnpresjkold'
 
+# for preview of documents using iframe embeded etc
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+

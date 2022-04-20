@@ -15,6 +15,14 @@ class fields(models.Model):
     def guidees_list(self):
         return ",".join([str(i) for i in self.guidees.all()])
 
+class certificates(models.Model):
+    fd=models.ForeignKey(fields,on_delete=models.CASCADE)
+    usr=models.ForeignKey(User,on_delete=models.CASCADE)
+    issuedby=models.CharField(max_length=500,blank=True)
+    certificate=models.FileField(upload_to='certificates',blank=True)
+    def __str__(self):
+        return str(self.usr)+"_"+str(self.fd)
+
 class calc(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mobile = models.CharField(max_length=12)
