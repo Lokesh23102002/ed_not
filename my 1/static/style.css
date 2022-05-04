@@ -316,6 +316,7 @@
   text-align: center;
 }
 
+
 #mainc {
   height: 100%;
   width: 100%;
@@ -327,7 +328,9 @@
 }
 
 
-
+.screen.hide {
+  display: none;
+}
 
 
 .pbox {

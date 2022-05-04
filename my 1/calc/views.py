@@ -54,6 +54,13 @@ def home(request):
 def dash(request):
     if request.user.is_authenticated == False:
         return redirect('home')
+    if request.method == 'POST' and ('fields' in request.POST) and request.FILES.get('upload'):
+        field=fields.objects.get(name=request.POST.get('fields'))
+        uploadd = request.FILES.get('upload')
+        use=request.user
+        cert=certificates(fd=field,usr=use,certificate = uploadd)
+        cert.save()
+     
 
     if request.method == 'POST' and request.FILES.get('upload'):
         upload = request.FILES.get('upload')

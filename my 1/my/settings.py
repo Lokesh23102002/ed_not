@@ -140,7 +140,7 @@ EMAIL_HOST_USER = 'eazyguidance@gmail.com'
 EMAIL_HOST_PASSWORD = 'ygduihnpresjkold'
 
 # for preview of documents using iframe embeded etc
-X_FRAME_OPTIONS = 'ALLOWALL'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 
