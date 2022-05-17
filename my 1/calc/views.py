@@ -54,18 +54,24 @@ def home(request):
 def dash(request):
     if request.user.is_authenticated == False:
         return redirect('home')
-    if request.method == 'POST' and ('fields' in request.POST) and request.FILES.get('upload'):
+    print(request.POST)
+    if request.method == 'POST' and ('remc' in request.POST):
+        field=request.POST.get('remc')
+        cert=certificates.objects.get(certificate = field)
+        cert.delete()
+        print(field)
+        
+    if request.method == 'POST' and ('fields' in request.POST) and request.FILES.get('uploadd'):
         field=fields.objects.get(name=request.POST.get('fields'))
-        uploadd = request.FILES.get('upload')
+        uploadd = request.FILES.get('uploadd')
         use=request.user
         cert=certificates(fd=field,usr=use,certificate = uploadd)
         cert.save()
      
-
-    if request.method == 'POST' and request.FILES.get('upload'):
+    print(request.POST)
+    if request.method == 'POST' and request.FILES.get('upload') :
         upload = request.FILES.get('upload')
         instance=request.user
-        print(str(BASE_DIR))
         if(instance.calc.image.path != (str(BASE_DIR) + "\media\profile.png")):
             instance.calc.image.delete()
         instance.calc.image = upload
