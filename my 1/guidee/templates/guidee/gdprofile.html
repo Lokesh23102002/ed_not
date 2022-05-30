@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'stgdprofile.css'%}" type="text/css">
+        <title>
+            Profile of guide</title>
+    </head>
+    <body>
+        <div class="top">
+            <a href="{% url 'home' %}" >Home</a>
+            
+        <h1> {{gd}}'s Profile</h1>
+        <br>
+        <div class="row">
+            <div class="column cert">
+                {% for c in certificates %}
+                <a href='{{c.certificate.url}}' target="_blank" >{{c.issuedby}}</a>
+                {% endfor %}
+            </div>
+            <div class="column prof">
+                <img src="{{gd.image.url}}" ,alt="profile pic" width="200px"
+                    height="100px">
+                <p class="name">Name</p>
+            </div>
+            <div class="column perf">
+                <p class="pd">
+                   Level :- {{gd.level}}<br> Rating :- {{gd.rating}}
+                </p>
+
+            </div>
+        </div>
+        <div class="hr">
+            <p></p>
+            <p><hr></p>
+            
+        </div>
+        <div class="ques">
+            <form action="" method="post">
+                <label for=""> Question:-</label>
+                <br>
+                <textarea class="in" name="question" id="id_question" rows="11" placeholder="Type your Question here"></textarea>
+                <br>
+                <input class="sbmt" type="button" value="submit" name="ques_submit" onclick=qagf() >
+                {%csrf_token%}
+            </form>
+        </div>
+        <div style="clear:both"><br><hr></div>
+        <div class="btm">
+            <div >Review:-
+            </div>
+            <div><textarea class="rev" cols="400" rows="2"></textarea></div>
+            <button type="button" onclick=shrevs() >Show all reviews</button>
+        </div>
+        <div id="rvs">
+            <div class="revs revl">Vilok:-</div>
+            <div class="revs revl"><label>Best guidance I got</label></div>
+            <div class="revs revl">Vilok:-</div>
+            <div class="revs revl"><label>Best guidance I got</label></div>
+            <div class="revs revl">Vilok:-</div>
+            <div class="revs revl"><label>Best guidance I got</label></div>
+            <div class="revs revl">Vilok:-</div>
+            <div class="revs revl"><label>Best guidance I got</label></div>
+        </div>
+            
+        </div>
+        <Script src="{%static 'js.js' %}"></Script>
+    </body>
+</html>

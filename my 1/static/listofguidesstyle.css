@@ -1,0 +1,36 @@
+.tablediv {
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+
+}
+
+.tablel {
+    width: 100%;
+    border: solid black 2px;
+    text-align: center;
+    background-color: #fff;
+
+}
+
+.name {
+    margin: 20px;
+    width: 30%;
+}
+
+.level {
+    width: 20%;
+}
+
+.qualification {
+    width: 30%;
+}
+
+.rating {
+    width: 20%;
+}
+
+.tablel tbody tr td img {
+    width: 45px;
+    height: 45px;
+}

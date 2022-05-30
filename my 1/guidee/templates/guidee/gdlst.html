@@ -1,0 +1,79 @@
+
+{% extends "home.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'listofguidesstyle.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+        .checked {
+            color: orange;
+        }
+    </style>
+    {% endblock head %}
+
+{% block content %}
+    <div id="main_content" class="main">
+
+        <div class="heading">
+            <h1>{{fd}}</h1>
+        </div>
+        <div class="heading">
+            <h2>GUIDES </h2>
+        </div>
+        <div class="tablediv">
+             <form action="" method="post" novalidate>
+            <table class="tablel">
+                <thead>
+                    <th class="name">Guide</th>
+                    <th class="level">Level</th>
+                    <th class="qualification">Qualification</th>
+                    <th class="rating">Rating</th>
+
+                </thead>
+                <tbody>
+                    {%for gd in gds%}
+                    
+
+                    <tr>
+                        <td class="name"><a href="../{{fd}}/{{gd}}"><img src="{{gd.image.url}}" alt=""><br>{{gd}}
+                            </a>
+                        </td>
+                        <td class="level">{{gd.level}}</td>
+                        <td class="qualification">Btech</td>
+                        <td class="rating">
+                            {%if 1 <= gd.guide_rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                       {%endif%}
+                        {%if 2 <= gd.guide_rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                       {%endif%}
+                        {%if 3 <= gd.guide_rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                       {%endif%}
+                        {%if 4 <= gd.guide_rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                       {%endif%}
+                        {%if 5 <= gd.guide_rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                       {%endif%}
+                            
+                        </td>
+                    </tr>
+                    {% csrf_token %}
+                    {%endfor%}
+                </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endblock content %}

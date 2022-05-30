@@ -28,7 +28,12 @@ class calc(models.Model):
     mobile = models.CharField(max_length=12)
     birthday=models.DateField()
     token = models.CharField( max_length=200,default='')
+    guide_rating=models.FloatField(default=0.0)
+    guidee_rating=models.FloatField(default=0.0)
+    level=models.IntegerField(default=0)
+    level=models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
+    certificates=models.ManyToManyField(certificates,blank=True)
     image = models.FileField(default ="profile.png" ,upload_to='profile_pics')
     fdsneeded=models.ManyToManyField(fields,related_name='interested_fields')
     fdsexpert=models.ManyToManyField(fields,related_name='expertise_fields')
@@ -42,7 +47,15 @@ class calc(models.Model):
         return self.user.username
 
     
-
+class Question(models.Model):
+    ques=models.TextField()
+    fd=models.ForeignKey(fields,on_delete=models.CASCADE)
+    guidee=models.ForeignKey(User,related_name="guidee", on_delete=models.CASCADE)
+    guide=models.ForeignKey(User, related_name="guide",on_delete=models.CASCADE)
+    time_asked=models.DateTimeField()
+    status=models.IntegerField(default=0)
+    class Meta:
+        ordering=['-time_asked']
 
 
 
