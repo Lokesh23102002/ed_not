@@ -413,8 +413,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 400px;
+  min-height: 400px;
+  height: 100%;
   width: 100%;
+
   background-color: white;
 }
 
@@ -490,4 +492,9 @@
   font-size: large;
   font-weight: 500;
 
+}
+
+
+.ques {
+  width: 100px;
 }

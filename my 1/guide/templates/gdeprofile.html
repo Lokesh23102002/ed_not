@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'stgdeprofile.css'%}">
+        <title>
+            {{gde}}'s profile</title>
+    </head>
+    <body>
+        <div class="top">
+            <a href="{% url 'home' %}" >Home</a>
+            <a href="{% url 'signout'%}">Logout</a>
+        </div>
+        <h1 style="text-align:center"> {{gde}}'s profile</h1>
+        <br>
+        <div class="row">
+            <div class="column cert">
+                <p class="left">Details:- <br><br> Qualifications:- <br>
+                    <br> Interested fields:-
+                    {% for fd in gde.usrinfo.fdsneeded.all%}
+                    {{fd}} <br>
+                    {%endfor%}
+                </p>
+            </div>
+            <div class="column prof">
+                <img src="{{gde.usrinfo.image.url}}" ,alt="profile pic" width="50px"
+                    height="100px">
+                <p class="name">Name</p>
+            </div>
+            <div class="column perf">
+                <p class="pd">
+                    Rating :- {{gde.usrinfo.guidee_rating}}
+                </p>
+
+            </div>
+            <p>Available mode:-</p>
+        </div>
+        <div class="hr">
+            <p></p>
+            <p><hr></p>
+            
+        </div>
+        <div class="qc">
+            <div class="q">
+                <p>Question:-<br><br>{{ques}}</p>
+            </div>
+            <div class="cnct">
+                <button type="button" value="Chat" class="btn btnch">Chat</button>
+                
+            </div>
+            </div>
+        </div>
+        <div style="clear:both"><br><hr></div>
+        <div class="btm">
+            <div >Review:-
+            </div>
+            <div><textarea class="rev" cols="400" rows="2"></textarea></div>
+            <button type="button" onclick=shrevs() >Show all reviews</button>
+        </div>
+        <div id="rvs">
+            <div class="revs revl">Huzefa:-</div>
+            <div class="revs revl"><label>He will listen properly to whatever said</label></div>
+            <div class="revs revn">Huzefa:-</div>
+            <div class="revs revl"><label>He will listen properly to whatever said</label></div>
+            <div class="revs revn">Huzefa:-</div>
+            <div class="revs revl"><label>He will listen properly to whatever said</label></div>
+            <div class="revs revn">Huzefa:-</div>
+            <div class="revs revl"><label>He will listen properly to whatever said</label></div>
+        </div>
+        <script src="{% static 'jsgdeprofile.js'%}"></script>
+    </body>
+
+</html>

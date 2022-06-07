@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from sympy import Q
 from django.views.decorators.cache import never_cache
 from my.settings import BASE_DIR
-from .models import certificates, calc,fields
+from .models import certificates, usrinfo,fields
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.files.storage import FileSystemStorage
@@ -29,7 +29,7 @@ def home(request):
         username= request.POST.get("user")
         password = request.POST.get("passw")
         user_obj = User.objects.filter(username=username).first()
-        profile_obj = calc.objects.filter(user=user_obj).first()
+        profile_obj = usrinfo.objects.filter(usr=user_obj).first()
 
         user=auth.authenticate(username=username,password=password)
 
@@ -72,10 +72,10 @@ def dash(request):
     if request.method == 'POST' and request.FILES.get('upload') :
         upload = request.FILES.get('upload')
         instance=request.user
-        if(instance.calc.image.path != (str(BASE_DIR) + "\media\profile.png")):
-            instance.calc.image.delete()
-        instance.calc.image = upload
-        instance.calc.save()
+        if(instance.usrinfo.image.path != (str(BASE_DIR) + "\media\profile.png")):
+            instance.usrinfo.image.delete()
+        instance.usrinfo.image = upload
+        instance.usrinfo.save()
 
         return redirect('dash')
     cert = request.user.certificates_set.all()
@@ -112,7 +112,7 @@ def signup(request):
         user.last_name = surname
         user.save()
         tokens=str(uuid.uuid4())
-        extra = calc(user=user,mobile=phoneno,birthday=dob,token=tokens)
+        extra = usrinfo(usr=user,mobile=phoneno,birthday=dob,token=tokens)
         extra.save()
 
         sendmail(email,tokens)
@@ -131,31 +131,31 @@ def guide(request):
         if 'submitx' in request.POST:
             for i in request.POST.getlist('fdsexpert'):
                 field=fields.objects.get(name=i)
-                request.user.calc.fdsexpert.add(field)
+                request.user.usrinfo.fdsexpert.add(field)
                 field.guides.add(request.user)
                 field.save()
-                request.user.calc.save()
+                request.user.usrinfo.save()
         elif 'submitn' in request.POST:
              for i in request.POST.getlist('fdsneeded'):
                 field=fields.objects.get(name=i)
-                request.user.calc.fdsneeded.add(field)
+                request.user.usrinfo.fdsneeded.add(field)
                 field.guidees.add(request.user)
                 field.save()
-                request.user.calc.save()
+                request.user.usrinfo.save()
         elif 'remx' in request.POST:
             i=request.POST.get('remx')
             field=fields.objects.get(name=i)
-            request.user.calc.fdsexpert.remove(field)
+            request.user.usrinfo.fdsexpert.remove(field)
             field.guides.remove(request.user)
             field.save()
-            request.user.calc.save()
+            request.user.usrinfo.save()
         elif 'remn' in request.POST:
             i=request.POST.get('remn')
             field=fields.objects.get(name=i)
-            request.user.calc.fdsneeded.remove(field)
+            request.user.usrinfo.fdsneeded.remove(field)
             field.guidees.remove(request.user)
             field.save()
-            request.user.calc.save()
+            request.user.usrinfo.save()
         
     
     guides = fields.objects.all()
@@ -171,7 +171,7 @@ def sendmail(email,token):
 
 
 def verify(request, token):
-    profile_obj = calc.objects.filter(token=token).first()
+    profile_obj = usrinfo.objects.filter(token=token).first()
     if profile_obj:
         if profile_obj.is_varified == True:
             messages.success(request, 'Your email has already been verified')

@@ -1,4 +1,6 @@
+{% extends "home.html" %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,14 +10,14 @@
     </head>
     <body>
         <div class="top">
-            <a href="{% url 'home' %}" >Home</a>
-            
+           
+        </div>
         <h1> {{gd}}'s Profile</h1>
         <br>
         <div class="row">
             <div class="column cert">
-                {% for c in certificates %}
-                <a href='{{c.certificate.url}}' target="_blank" >{{c.issuedby}}</a>
+                {% for c in gd_us.certificates_set.all %}
+                <a href='{{c.certificate.url}}'>{{c.issuedby}}</a>
                 {% endfor %}
             </div>
             <div class="column prof">
@@ -67,3 +69,87 @@
         <Script src="{%static 'js.js' %}"></Script>
     </body>
 </html>
+
+    {% block content %}
+    <div id="screen" class="screen ">
+      <div class="heading">
+        <h1>Profile</h1>
+      </div>
+      <div id="mainc">
+        <div class="pbox certificate">
+          <div class="headingcert">
+            Certificates
+          </div>
+          {%for i in gd_us.certificates_set.all%}
+          <p>{{i.fd}}
+          </p>
+          <embed src="{{i.certificate.url}}" width="100%" height="200px" />
+          {%endfor%}
+          
+        </div>
+        <div class="pbox general">
+
+          <div class="main-content">
+            <div class="pimage" id="profile_image" onclick="">
+              <img src="{{ gd.image.url }}" alt=""></div>
+      
+            
+            <div class="text-info">
+              <h2>{{ gd_us.first_name }} {{ gd_us.last_name }}</h2>
+              <div class="contact">
+
+                <div class="table"><label for=""><strong>Email:-</strong></label><br>
+                  <p>{{ gd_us.email }}</p>
+                </div>
+                <div class="table"><label for=""><strong>Phone no:-</strong></label><br>
+                  <p>+91 {{ gd.mobile }}</p>
+                </div>
+                <div class="table"><label for=""><strong>DOB:-</strong></label><br>
+                  <p>{{ gd.birthday|date:"d,F,Y" }}
+                </div>
+<div class="ques">
+            <form action="" method="post">
+                <label for=""> Question:-</label>
+                <br>
+                <textarea class="in" name="question" id="id_question" rows="11" placeholder="Type your Question here"></textarea>
+                <br>
+                <input class="sbmt" type="button" value="submit" name="ques_submit" onclick=qagf() >
+                {%csrf_token%}
+            </form>
+        </div>
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+
+        <div class="pbox rating">
+          <p>Review & Rating</p>
+        </div>
+
+
+      </div>
+    </div>
+    <div id="upload" class="screen hide">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="">choose field</label>
+        <select name="fields" id="">
+          {% for i in user.usrinfo.fdsexpert.all %}
+          <option value="{{i}}">{{i}}</option>
+          {% endfor %}
+        </select><br><br>
+        <input type="file" name="uploadd">
+
+        <button>submit</button>
+      </form>
+    </div>
+<Script src="{%static 'js.js' %}"></Script>
+
+    {%endblock content%}
+

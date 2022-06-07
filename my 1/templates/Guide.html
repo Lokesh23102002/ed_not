@@ -12,7 +12,7 @@
   </div>
   <div class="fieldnames">
     <div class="list">
-      {% for i in user.calc.fdsneeded.all %}
+      {% for i in user.usrinfo.fdsneeded.all %}
       <div class="ele">
         <form action="" class="remform" method="post">{% csrf_token %}<button id="close" class="bx bx-x close"
             name="remn" value="{{i}}">
@@ -28,7 +28,7 @@
   <button id="guidee_field">Add Field</button>
 
   <!--guidee section end-->
-  <!--guidee section start-->
+  <!--guide section start-->
   <div class="heading">
     <h1>Guide</h1>
   </div>
@@ -36,17 +36,17 @@
   <div class="fieldnames">
 
     <div class="list">
-      {% for i in user.calc.fdsexpert.all %}
+      {% for i in user.usrinfo.fdsexpert.all %}
       <div class="ele">
         <form action="" class="remform" method="post"> {% csrf_token %} <button id="close" class="bx bx-x close"
-            name="remx" value="{{i}}"></button></form><a href="#">{{i}}</a>
+            name="remx" value="{{i}}"></button></form><a href="guide/{{i}}/guidees_contacted?show=new">{{i}}</a>
       </div>
       {% endfor %}
     </div>
   </div>
   <button id="guide_field">Add Field</button>
 </div>
-<!--guidee section end-->
+<!--guide section end-->
 <!--guide section new field-->
 <div id="guide_new" class="popup ">
 
@@ -59,7 +59,7 @@
 
 
         {%for i in fields.all%}
-        {% if i not in user.calc.fdsexpert.all  %}
+        {% if i not in user.usrinfo.fdsexpert.all  %}
         <li>
           <label for="">{{i}}</label>
           <input id="checkbox" type="checkbox" value='{{i}}' name='fdsexpert' class="option"><br>
@@ -87,7 +87,7 @@
         {% csrf_token %}
 
         {%for i in fields.all%}
-        {% if i not in user.calc.fdsneeded.all  %}
+        {% if i not in user.usrinfo.fdsneeded.all  %}
         <li> <label for="">{{i}}</label>
           <input id="checkbox" type="checkbox" value='{{i}}' name='fdsneeded' class="option"><br>
         </li>
