@@ -1,4 +1,6 @@
-{%load static%}
+
+{% extends "home.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -61,8 +63,53 @@
                     {%endif%}
                 </div>
                 <button type="button" value="Chat" class="btn btnch">Chat</button>
-                <button type="button" value="Audio Call" class="btn btnac">Audio Call</button>
-                <button type="button" value="Video Call" class="btn btnvc">Video Call</button>
+                
             </div>
     </body>
 </html>
+{% block head %}
+<link rel="stylesheet" href="{% static 'stgdconnect.css' %}">
+<title>Q&A by guide</title>
+{% endblock head %}
+{% block content %}
+ <body>
+      
+        <div class= "ques">
+            <p style="text-align:left;padding-top:0%">Question asked :- {{ques}}</p>
+        </div>
+        
+        <div class= "qac">
+            <div class="qa">
+                {% for question in gd.questions_byguidees.all %}
+                <div class=" qai qa1">
+                    <p class="q">Question:- {{question.ques}}</p>
+                    <p class="a">Answer</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="cnct">
+                <div class="cncti cnctm">
+                    {% if gd.guide_connectmode == 0 %}
+                    {% if not connect_asked %}
+                    <span>Connect mode :- Not ready to contact </span>
+                    <form action="" method="post">
+                    <input type="submit" value="connect" name="connect">
+                    {%csrf_token%}
+                    </form>
+                    {%else%}
+                    <span>Connect mode :- Not ready to contact </span>
+                    <form action="" method="post">
+                    <input type="submit" value="disconnect" name="disconnect">
+                    {%csrf_token%}
+                    </form>
+                    {%endif%}
+                    {%else%}
+                    <span>Connect mode :- Ready to contact </span>
+                    {%endif%}
+                </div>
+                <button type="button" value="Chat" class="btn btnch">Chat</button>
+                
+            </div>
+    </body>
+
+{% endblock content %}

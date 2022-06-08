@@ -23,6 +23,8 @@ def gdprofile(request,field,guide):
         if request.GET.get('ques') is not None:
             question=request.GET.get('ques')
             print(question)
+            
+                
             return render(request,'guidee/gdconnect.html',{'ques':question,'gd':gd,'connect_asked':False})
         else:
             certs=gd.certificates.all()

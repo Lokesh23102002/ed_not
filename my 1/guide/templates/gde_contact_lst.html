@@ -1,17 +1,20 @@
+{% extends "home.html" %}
 {%load static%}
-<Doctype! html>
-    <html>
 
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{%static 'stgde_contact_lst.css'%}">
+
+    {% block head %}
+ <link rel="stylesheet" href="{%static 'stgde_contact_lst.css'%}">
         <title>List of Guides</title>
-    </head>
-    <body>
-        <div class="top">
-            <a href="{% url 'home' %}" >Home</a>
-            <a href="{% url 'signout'%}">Logout</a>
-        </div>
+
+{% endblock head %}
+
+   
+
+
+
+    {%block content%}
+     <body>
+      
         <div class="header">
         <h1 class="field">{{fd}} </h1>
         <br>
@@ -25,24 +28,28 @@
             {% endif %}
         </div>
         <hr>
-        <div >
+        <div class="table_q">
+
+         
+        
             
             <table class="list">
                 <tr class="row">
                     <th class="name">Name</th>
                     <th class="rating">Rating</th>
+                    <th class="rating">question</th>
                 </tr>
                 {%for ques in questions%}
                 <tr class="r">
                     <td class="name"><a href="../{{fd}}/guidee/{{ques.guidee}}?ques={{ques.ques}}" class="a" >{{ques.guidee}}</a></td>
+                    
                     <td>{{ques.guidee.usrinfo.guidee_rating}}</td>
+                    <td>{{ques.ques}}</td>
                 </tr>
-                <tr class="rq">
-                    <td colspan="2">{{ques.ques}}</td>
-                </tr>
+               
                 {%endfor%}                
             </table>
             <hr>
         </div>
     </body>
-    </html>
+    {%endblock content%}

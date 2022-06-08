@@ -24,6 +24,7 @@ def home(request):
 
     if is_user_logged == True:
         return redirect('guide')
+  
     
     if request.method ==  "POST" :
         username= request.POST.get("user")
@@ -126,6 +127,8 @@ def signout(request):
     return redirect('home')
 
 def guide(request):
+    if request.user.is_authenticated == False:
+        return redirect('home')
     print(request.POST)
     if request.method=="POST":
         if 'submitx' in request.POST:
