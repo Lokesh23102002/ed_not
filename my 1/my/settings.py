@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'chat.apps.ChatConfig',
     'guide.apps.GuideConfig',
     'calc.apps.CalcConfig',
     'django.contrib.admin',
@@ -74,9 +76,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'my.wsgi.application'
 
+ASGI_APPLICATION= 'my.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    },
+}
+
 
 DATABASES = {
     'default': {
@@ -84,6 +94,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation

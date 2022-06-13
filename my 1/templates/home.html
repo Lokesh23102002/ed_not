@@ -14,6 +14,7 @@
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="{% static 'css.css' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block script %}{% endblock script %}
 </head>
 
 <body>
@@ -84,7 +85,7 @@
           <div class="headingcert">
             Certificates
           </div>
-          {%for i in user.certificates_set.all%}
+          {%for i in user.certificate_set.all%}
           <p>{{i.fd}}<form method="POST"> {% csrf_token %}<button id="close" class="bx bx-x close" name="remc"
                 value={{i.certificate}}></button>
             </form>
@@ -143,6 +144,13 @@
 
         <div class="pbox rating">
           <p>Review & Rating</p>
+           <div id="rvs">
+        {%for rvw in user.guideeinfo.rvws_received.all%}
+        <div class="revs revl">{{rvw.gd}}</div>
+        <div class="revs revl"><label>{{rvw.rvw}}</label></div>
+        
+        {%endfor%}
+      </div>
         </div>
 
 
@@ -153,7 +161,7 @@
         {% csrf_token %}
         <label for="">choose field</label>
         <select name="fields" id="">
-          {% for i in user.usrinfo.fdsexpert.all %}
+          {% for i in user.guideinfo.fds.all %}
           <option value="{{i}}">{{i}}</option>
           {% endfor %}
         </select><br><br>

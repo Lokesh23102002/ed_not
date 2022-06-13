@@ -7,27 +7,31 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from sympy import true
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class fields(models.Model):
+    no=models.IntegerField()
     name=models.CharField(max_length=200,primary_key=True)
     guides=models.ManyToManyField(User,related_name='guides',blank=True)
     guidees=models.ManyToManyField(User,related_name='guidees',blank=True)
     def __str__(self):
         return str(self.name)
 
-    def guides_list(self):
-        return ",".join([str(i) for i in self.guides.all()])
-    def guidees_list(self):
-        return ",".join([str(i) for i in self.guidees.all()])
 
-class certificates(models.Model):
-    fd=models.ForeignKey(fields,on_delete=models.CASCADE)
-    usr=models.ForeignKey(User,on_delete=models.CASCADE)
-    issuedby=models.CharField(max_length=500,blank=True)
-    certificate=models.FileField(upload_to='certificates',blank=True)
-    def __str__(self):
-        return str(self.usr)+"_"+str(self.fd)
+class Review(models.Model):
+    rvw=models.TextField()
+    gd=models.ForeignKey(User, related_name="rvw_guides", on_delete=models.CASCADE)
+    gde=models.ForeignKey(User, related_name="rvw_guidees", on_delete=models.CASCADE)
+    time_sent=models.DateTimeField(auto_now_add=True)
+    status=models.CharField(max_length=15,default="gde_gd")
+
+class Rating(models.Model):
+    value=models.FloatField(validators=[MinValueValidator(0.0),MaxValueValidator(5.0)],)
+    gd=models.ForeignKey(User, related_name="rating_guides", on_delete=models.CASCADE)
+    gde=models.ForeignKey(User, related_name="rating_guidees", on_delete=models.CASCADE)
+    status=models.CharField(max_length=15,default='gde_gd')
+    time_rated=models.DateTimeField(auto_now=True)
 
 class Question(models.Model):
     ques=models.TextField()
@@ -44,28 +48,12 @@ class usrinfo(models.Model):
     mobile = models.CharField(max_length=12)
     birthday=models.DateField()
     token = models.CharField( max_length=200,default='')
-    guide_rating=models.FloatField(default=0.0)
-    guidee_rating=models.FloatField(default=0.0)
-    level=models.IntegerField(default=0)
-    level=models.IntegerField(default=0)
     is_varified = models.BooleanField(default=False)
-    certificates=models.ManyToManyField(certificates,blank=True)
     image = models.FileField(default ="profile.png" ,upload_to='profile_pics')
-    fdsneeded=models.ManyToManyField(fields,related_name='interested_fields')
-    fdsexpert=models.ManyToManyField(fields,related_name='expertise_fields')
-    questions_byguidees=models.ManyToManyField(Question,related_name='questions_byguidees')
-    questions_asked=models.ManyToManyField(Question,related_name="questions_asked")
-    guide_connectmode=models.IntegerField(default=0)
-    guidee_availablemode=models.IntegerField(default=0)
-    guide_lastgdelstseen=models.DateTimeField(default=timezone.now())
-    
-    def fdsneeded_list(self):
-        return ",".join([str(i) for i in self.fdsneeded.all()])
-    def fdsexpert_list(self):
-        return ",".join([str(i) for i in self.fdsexpert.all()])
+
 
     def __str__(self):
-        return self.usr.username
+        return str(self.usr)
 
     
 

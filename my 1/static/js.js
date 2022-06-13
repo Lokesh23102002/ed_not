@@ -3,6 +3,11 @@ function qagf(){
     url=location.pathname+"?ques="+ques
     window.location.href=url;
 }
+
+function chat(){
+    
+}
+
 function shrevs(){
     document.getElementById("rvs").style.display= 'grid';
     

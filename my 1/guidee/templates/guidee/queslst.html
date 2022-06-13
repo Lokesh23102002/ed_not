@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'stqueslst.css' %}">
+        <title>Q&A by guide</title>
+    </head>
+    <body>
+        <div class= "ques">
+            <p style="text-align:left;padding-top:0%">{{ques}}</p>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class= "qac">
+            <div class="qa">
+                {% for q in related_ques %}
+                <div class="gi gi1">
+                    <p class="gie gn gn1" ><button id="{{q.guide}}" onclick=pogf(this.id) >{{q.guide}}</button></p>
+                    <p class="gie gq gq1">B.tech IIT</p>
+                    <p class="gie gl gl1">{{q.guide.guideinfo.level}}</p>
+                    <p class="gie gr gr1">{{q.guide.guideinfo.rating}}</p>
+                </div>
+                <div class=" qai qa1">
+                    <p class="q">{{q.ques}}</p>
+                    <p class="a">Answer</p>
+                </div>
+                {%endfor%}
+            </div>
+            {{ fd.name| json_script:'fd'}}
+        <script src="{% static 'jsqueslst.js' %}">
+        </script>
+    </body>
+</html>

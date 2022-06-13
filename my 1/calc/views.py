@@ -11,10 +11,13 @@ from django.urls import reverse_lazy
 from sympy import Q
 from django.views.decorators.cache import never_cache
 from my.settings import BASE_DIR
-from .models import certificates, usrinfo,fields
+from .models import usrinfo,fields
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.files.storage import FileSystemStorage
+from guide.models import guideinfo
+from guidee.models import guideeinfo
+from guide.models import Certificate
 # Create your views here
 @never_cache
 def home(request):
@@ -58,7 +61,7 @@ def dash(request):
     print(request.POST)
     if request.method == 'POST' and ('remc' in request.POST):
         field=request.POST.get('remc')
-        cert=certificates.objects.get(certificate = field)
+        cert=Certificate.objects.get(certificate = field)
         cert.delete()
         print(field)
         
@@ -66,7 +69,7 @@ def dash(request):
         field=fields.objects.get(name=request.POST.get('fields'))
         uploadd = request.FILES.get('uploadd')
         use=request.user
-        cert=certificates(fd=field,usr=use,certificate = uploadd)
+        cert=Certificate(fd=field,usr=use,certificate = uploadd)
         cert.save()
      
     print(request.POST)
@@ -79,7 +82,7 @@ def dash(request):
         instance.usrinfo.save()
 
         return redirect('dash')
-    cert = request.user.certificates_set.all()
+    cert = request.user.certificate_set.all()
     
     context={'certificate':cert}
     return render(request , "home.html", context)
@@ -104,9 +107,9 @@ def signup(request):
             messages.error(request, 'Username already exist')
             return redirect('signup')
 
-        if User.objects.filter(email=email).first():
-            messages.error(request, 'Email already in use')
-            return redirect('signup')
+        #if User.objects.filter(email=email).first():
+            #messages.error(request, 'Email already in use')
+            #return redirect('signup')
 
         user = User.objects.create_user(username=username,email=email,password=password)
         user.first_name = name
@@ -115,6 +118,10 @@ def signup(request):
         tokens=str(uuid.uuid4())
         extra = usrinfo(usr=user,mobile=phoneno,birthday=dob,token=tokens)
         extra.save()
+        guideinf=guideinfo(usr=user)
+        guideeinf=guideeinfo(usr=user)
+        guideinf.save()
+        guideeinf.save()
 
         sendmail(email,tokens)
         return HttpResponse('verification link has been sent on your email please verify to login')
@@ -134,28 +141,28 @@ def guide(request):
         if 'submitx' in request.POST:
             for i in request.POST.getlist('fdsexpert'):
                 field=fields.objects.get(name=i)
-                request.user.usrinfo.fdsexpert.add(field)
+                request.user.guideinfo.fds.add(field)
                 field.guides.add(request.user)
                 field.save()
                 request.user.usrinfo.save()
         elif 'submitn' in request.POST:
              for i in request.POST.getlist('fdsneeded'):
                 field=fields.objects.get(name=i)
-                request.user.usrinfo.fdsneeded.add(field)
+                request.user.guideeinfo.fds.add(field)
                 field.guidees.add(request.user)
                 field.save()
                 request.user.usrinfo.save()
         elif 'remx' in request.POST:
             i=request.POST.get('remx')
             field=fields.objects.get(name=i)
-            request.user.usrinfo.fdsexpert.remove(field)
+            request.user.guideinfo.fds.remove(field)
             field.guides.remove(request.user)
             field.save()
             request.user.usrinfo.save()
         elif 'remn' in request.POST:
             i=request.POST.get('remn')
             field=fields.objects.get(name=i)
-            request.user.usrinfo.fdsneeded.remove(field)
+            request.user.guideeinfo.fds.remove(field)
             field.guidees.remove(request.user)
             field.save()
             request.user.usrinfo.save()

@@ -1,77 +1,112 @@
 {% extends "home.html" %}
 {% load static %}
-
+{%block head%}
+<link rel="stylesheet" href="{% static 'stgdeprofile.css'%}">
+{%endblock head%}
+{%block script%}
+<script>
+  function chat() {
+    window.alert("came");
+    gde = JSON.parse(document.getElementById('gde').textContent);
+    ques_id = JSON.parse(document.getElementById('ques_id').textContent);
+    fd_no = JSON.parse(document.getElementById('fd_no').textContent);
+    url = "/chat/" + gde + "?requestfrom=guide&fd_no=" + fd_no + "&ques_id=" + ques_id;
+    window.alert("came");
+    window.location.href = url;
+  }
+</script>
+{%endblock script%}
 
 
 {% block content %}
-    <div id="screen" class="screen ">
-      <div class="heading">
-        <h1>Profile</h1>
+<div id="screen" class="screen ">
+  <div class="heading">
+    <h1>Profile</h1>
+  </div>
+  <div id="mainc">
+    <div class="pbox certificate">
+      <div class="headingcert">
+        Certificates
       </div>
-      <div id="mainc">
-        <div class="pbox certificate">
-          <div class="headingcert">
-            Certificates
-          </div>
-          {%for i in gde.certificates_set.all%}
-          <p>{{i.fd}}
-          </p>
-          <embed src="{{i.certificate.url}}" width="100%" height="200px" />
-          {%endfor%}
-          
-        </div>
-        <div class="pbox general">
+      {%for i in gde.certificate_set.all%}
+      <p>{{i.fd}}
+      </p>
+      <embed src="{{i.certificate.url}}" width="100%" height="200px" />
+      {%endfor%}
 
-          <div class="main-content">
-            <div class="pimage" id="profile_image" onclick="">
-              <img src="{{ gde.usrinfo.image.url }}" alt=""></div>
-      
-            
-            <div class="text-info">
-              <h2>{{gde}}'s profile</h2>
-              <div class="contact">
+    </div>
+    <div class="pbox general">
 
-                <div class="table"><label for=""><strong>Email:-</strong></label><br>
-                  <p>{{ gde.email }}</p>
-                </div>
-                <div class="table"><label for=""><strong>Phone no:-</strong></label><br>
-                  <p>+91 {{ gde.usrinfo.mobile }}</p>
-                </div>
-                <div class="table"><label for=""><strong>DOB:-</strong></label><br>
-                  <p>{{ gde.usrinfo.birthday|date:"d,F,Y" }}
-                </div>
+      <div class="main-content">
+        <div class="pimage" id="profile_image" onclick="">
+          <img src="{{ gde.usrinfo.image.url }}" alt=""></div>
 
-                <hr>
 
-                
-                <div class="qc">
-            <div class="q">
+        <div class="text-info">
+          <h2>{{gde}}'s profile</h2>
+          <div class="contact">
+
+            <div class="table"><label for=""><strong>Email:-</strong></label><br>
+              <p>{{ gde.email }}</p>
+            </div>
+            <div class="table"><label for=""><strong>Phone no:-</strong></label><br>
+              <p>+91 {{ gde.usrinfo.mobile }}</p>
+            </div>
+            <div class="table"><label for=""><strong>DOB:-</strong></label><br>
+              <p>{{ gde.usrinfo.birthday|date:"d,F,Y" }}
+            </div>
+
+            <hr>
+
+
+            <div class="qc">
+              <div class="q">
                 <h4>Question:-</h4>
-                <p>{{ques}}</p>
-            </div>
-            <div class="cnct">
-                <button type="button" value="Chat" class="btn btnch">Chat</button>
-                
-            </div>
-            </div>
-        </div>
+                <p>{{ques.ques}}</p>
+              </div>
+              <div class="cnct">
+                <button type="button" value="Chat" id="chat" class="btn btnch" onclick=chat()>Chat</button>
 
+              </div>
             </div>
-
-
           </div>
+
         </div>
 
 
-        <div class="pbox rating">
-          <p>Review & Rating</p>
-        </div>
-
-    </div>
+      </div>
     </div>
 
 
+    <div class="pbox rating">
+      <p>Review & Rating</p><br>
+      <div>Review:-
+      </div>
+      <div>
+        <form action="" method="post">
+          <textarea class="rev" cols="23" rows="2" name="rvw"></textarea><br>
+          <input type="submit" value="post" name="rvw_post">
+          {%csrf_token%}
+        </form>
+      </div>
+      <button type="button" onclick=shrevs()>Show all reviews</button>
+      <div id="rvs">
+        {% for rvw in rvws %}
+        <div class="revs revl">{{rvw.gd}}</div>
+        <div class="revs revl"><label>{{rvw.rvw}}</label></div>
+        {%endfor%}
+      </div>
+    </div>
+     {{ gde.username|json_script:'gde'}}
+        {{ ques.ques|json_script:'ques' }}
+        {{ ques.id|json_script:'ques_id' }}
+        {{ fd.no|json_script:'fd_no' }}
 
 
-    {%endblock content%}
+  </div>
+</div>
+<Script src="{%static 'js.js' %}"></Script>
 
+
+
+{%endblock content%}
