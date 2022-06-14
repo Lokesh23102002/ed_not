@@ -46,15 +46,15 @@ def gdprofile(request,field,guide):
         if request.GET.get('ques') is not None:
             question=request.GET.get('ques')
             checkques=Question.objects.filter(ques=question,guide=gd,guidee=usr,fd=fd).exists()
-            related_ques= Question.objects.filter(guide=gd,ques=question,fd=fd)
-            exclude=related_ques.exclude(guidee=usr)
+            
             print(checkques)
             if(checkques == True):
                 Qu=Question.objects.get(ques=question,guide=gd,guidee=usr,fd=fd)
             else:
                 Qu=Question(ques=question,guide=gd,guidee=usr,fd=fd)
                 Qu.save()
-           
+            related_ques= Question.objects.filter(guide=gd,ques=question,fd=fd)
+            exclude=related_ques.exclude(guidee=usr)
             return render(request,'guidee/gdconnect.html',{'ques':Qu,'gd':gd,'fd':fd, 'connect_asked':False, 'related_ques':exclude})
         else:
             certs=gd.guideinfo.certificates.all()
@@ -84,8 +84,9 @@ def gdprofile(request,field,guide):
                 gd.guideinfo.questions_byguidees.remove(Q)
                 ques_sent=False
             
-            related_ques= gd.guideinfo.questions_byguidees.all().annotate(rank=SearchRank(SearchVector('ques'),SearchQuery(str(question)))).order_by('-rank')
-            return render(request,'guidee/gdconnect.html',{'ques':Q,'gd':gd, 'fd':fd, 'ques_sent':ques_sent,'related_ques':related_ques})
+            related_ques= Question.objects.filter(guide=gd,ques=question,fd=fd)
+            exclude=related_ques.exclude(guidee=usr)
+            return render(request,'guidee/gdconnect.html',{'ques':Q,'gd':gd, 'fd':fd, 'ques_sent':ques_sent,'related_ques':exclude})
         elif 'rvw_post' in request.POST:
             rvw=request.POST['rvw']
             rvw_object=Review.objects.create(rvw=rvw,gd=gd,gde=usr,status="gde_gd")

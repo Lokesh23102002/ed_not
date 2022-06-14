@@ -4,9 +4,6 @@ function qagf(){
     window.location.href=url;
 }
 
-function chat(){
-    
-}
 
 function shrevs(){
     document.getElementById("rvs").style.display= 'grid';
