@@ -17,7 +17,7 @@ def gde_cntct_lst(request,field):
         tp='chat'
         gde_lst=[]
         for rm in usr.guideinfo.guide_rooms.all():
-            gde_lst+=[rm.guidee]
+            gde_lst+=[rm]
         return render(request,'gde_contact_lst.html',{'fd':fd,'gde_lst':gde_lst,'type':tp})
     elif show=='not seen':
         tp='ques'
