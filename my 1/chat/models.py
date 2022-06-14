@@ -12,6 +12,7 @@ class room(models.Model):
     ques=models.ForeignKey(Question, on_delete=models.CASCADE, blank= True, null= True)
     fd=models.ForeignKey(fields, on_delete=models.CASCADE, blank=True, null=True)
     room_name=models.CharField(max_length=500)
+    status=models.TextField(max_length=20, default="r")
     def __str__(self):
         return str(self.room_name)
 

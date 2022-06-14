@@ -20,6 +20,7 @@ class Certificate(models.Model):
 
 
 
+
 class guideinfo(models.Model):
     usr=models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)
     fds=models.ManyToManyField(fields,related_name='expertise_fields',blank=True)

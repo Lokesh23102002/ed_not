@@ -5,7 +5,7 @@
     <title>Chat Room</title>
 </head>
 <body>
-    <h6>{{ques}}</h6>
+    <h1>{{ques.ques}}</h1>
     <textarea id="chat-log" cols="100" rows="20">
         {% for mssg in room.message_set.all %}    
         {{mssg.mssg}}   -- {{mssg.sender}}  
@@ -13,6 +13,15 @@
     </textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
+    <br>
+    <br>
+    <br>
+    {% if user_role == "guide" %}
+    <form action="" method="post">
+    <input id="chat-closeroom" name="chat-closeroom" type="submit" value="Close the room">
+    {%csrf_token%}
+    </form>
+    {% endif %}
     {{ user_role|json_script:"user_role"}}
     {{ other_usr| json_script:"o_u" }}
     {{ room.room_name|json_script:"room-name" }}
@@ -43,7 +52,7 @@
                 document.querySelector('#chat-message-submit').click();
             }
         };
-
+        
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
             const usrname=JSON.parse(document.getElementById('username').textContent);
@@ -62,6 +71,9 @@
             }));
             messageInputDom.value = '';
         };
+        document.querySelector('#chat-closeroom').onclick = function(e) {
+            
+        }
     </script>
 </body>
 </html>

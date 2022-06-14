@@ -15,10 +15,11 @@ def gde_cntct_lst(request,field):
     show=request.GET.get('show')
     if show=='chat_gde':
         tp='chat'
-        gde_lst=[]
+        rms=[]
         for rm in usr.guideinfo.guide_rooms.all():
-            gde_lst+=[rm]
-        return render(request,'gde_contact_lst.html',{'fd':fd,'gde_lst':gde_lst,'type':tp})
+            if rm.status=="r":
+                rms+=[rm]
+        return render(request,'gde_contact_lst.html',{'fd':fd,'rms':rms,'type':tp})
     elif show=='not seen':
         tp='ques'
         shl=[0,]

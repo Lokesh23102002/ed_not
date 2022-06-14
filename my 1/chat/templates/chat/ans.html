@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<body>
+    <h6>{{ques}}</h6>
+    <textarea id="chat-log" cols="100" rows="20">
+        {% for mssg in room.message_set.all %}    
+        {{mssg.mssg}}   -- {{mssg.sender}}  
+        {% endfor %}
+    </textarea><br>
+    <input id="chat-message-input" type="text" size="100"><br>
+    <input id="chat-message-submit" type="button" value="Send">
+    <br>
+    <br>
+    <br>
+    <form method="post">
+        <input id="ans" name="ans" type="text" size="100"><br>
+        <input id="ans-submit" name="ans-submit" type="submit" value="submit">
+        {%csrf_token%}
+    </form>

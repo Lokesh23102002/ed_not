@@ -40,6 +40,7 @@ class Question(models.Model):
     guide=models.ForeignKey(User, related_name="guide",on_delete=models.CASCADE)
     time_asked=models.DateTimeField(default=timezone.now())
     status=models.IntegerField(default=0)
+    ans=models.TextField(blank=True, null=True)
     class Meta:
         ordering=['-time_asked']
 

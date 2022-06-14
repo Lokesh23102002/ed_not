@@ -38,12 +38,12 @@
                 <th class="rating">Rating</th>
             </tr>
             {% if type == 'chat' %}
-            {% for rm in gde_lst %}
-            <tr class="r">
-                <td class="name"><a href="../{{fd}}/guidee/{{rm.guidee}}?ques={{rm.ques.ques}}" class="a">{{rm.guidee}}</a></td>
-                <td>{{rm.guidee.guideeinfo.rating}}</td>
-            </tr>
-            {%endfor%}
+           {% for rm in rms %}
+                <tr class="r">
+                    <td class="name"><a href="/chat/{{rm.guide}}?requestfrom=guidee&fd_no={{rm.fd.no}}&ques_id={{rm.ques.id}}" class="a" >{{rm.guidee.username}}</a></td>
+                    <td>{{rm.ques.ques}}</td>
+                </tr>
+                {%endfor%}
             {% elif type == 'ques' %}
             {%for ques in questions%}
             <tr class="r">
