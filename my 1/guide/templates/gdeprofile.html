@@ -82,12 +82,27 @@
       <p>Review & Rating</p><br>
       <div>Review:-
       </div>
-      <div>
-        <form action="" method="post">
-          <textarea class="rev" cols="23" rows="2" name="rvw"></textarea><br>
-          <input type="submit" value="post" name="rvw_post">
-          {%csrf_token%}
-        </form>
+      <div style="clear:both"><br>
+        <hr>
+      </div>
+      <div class="btm">
+        <div style="float: right;">
+          <form action="" method="post">
+            <input type="submit" value="rate" name="rate">
+            <input type="text" name="rating">
+            {%csrf_token%}
+          </form>
+        </div>
+        <div>Review:-
+        </div>
+        <div>
+          <form action="" method="post">
+            <textarea class="rev" cols="200" rows="2" name="rvw"></textarea>
+            <input type="submit" value="post" name="rvw_post">
+            {%csrf_token%}
+          </form>
+        </div>
+        <button type="button" onclick=shrevs()>Show all reviews</button>
       </div>
       <button type="button" onclick=shrevs()>Show all reviews</button>
       <div id="rvs">
@@ -97,13 +112,15 @@
         {%endfor%}
       </div>
     </div>
-     {{ gde.username|json_script:'gde'}}
-        {{ ques.ques|json_script:'ques' }}
-        {{ ques.id|json_script:'ques_id' }}
-        {{ fd.no|json_script:'fd_no' }}
-
 
   </div>
+  {{ gde.username|json_script:'gde'}}
+  {{ ques.ques|json_script:'ques' }}
+  {{ ques.id|json_script:'ques_id' }}
+  {{ fd.no|json_script:'fd_no' }}
+
+
+</div>
 </div>
 <Script src="{%static 'js.js' %}"></Script>
 

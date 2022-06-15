@@ -14,10 +14,13 @@
 <div id="main_content" class="main">
 
     <div class="heading">
-        <h1>{{fd}}</h1>
-    </div>
-    <div class="heading">
-        <h2>GUIDES </h2>
+        {% if  type == 'fd_gd_lst' %}
+        <h1 class="field">{{fd}} </h1>
+        {% elif type == 'contact_lst' %}
+        <h1 class="cnctlstheader">On going questions</h1>
+        {% endif %}
+        <br>
+
     </div>
     <div class="tablediv">
         <form action="" method="post" novalidate>
@@ -34,34 +37,40 @@
                     {%if gd != user %}
 
                     <tr>
+                        {% if  type == 'fd_gd_lst' %}
                         <td class="name"><a href="../{{fd}}/{{gd}}"><img src="{{gd.usrinfo.image.url}}"
                                     alt=""><br>{{gd}}
                             </a>
                         </td>
+                        {% elif type == 'contact_lst' %}
+                        <td class="name"><a
+                                href="{% url 'chat:room' other_usr=gd.username %}?requestfrom=guidee">{{gd}}</a></td>
+                        {%endif%}
+                        
                         <td class="level">{{gd.guideinfo.level}}</td>
                         <td class="qualification">Btech</td>
                         <td class="rating">
-                            {%if 1 <= gd.guide_rating %}
+                            {%if 1 <= gd.guideinfo.rating %}
                             <span class="fa fa-star checked"></span>
                             {%else%}
                             <span class="fa fa-star "></span>
                             {%endif%}
-                            {%if 2 <= gd.guide_rating %}
+                            {%if 2 <= gd.guideinfo.rating %}
                             <span class="fa fa-star checked"></span>
                             {%else%}
                             <span class="fa fa-star "></span>
                             {%endif%}
-                            {%if 3 <= gd.guide_rating %}
+                            {%if 3 <= gd.guideinfo.rating %}
                             <span class="fa fa-star checked"></span>
                             {%else%}
                             <span class="fa fa-star "></span>
                             {%endif%}
-                            {%if 4 <= gd.guide_rating %}
+                            {%if 4 <= gd.guideinfo.rating %}
                             <span class="fa fa-star checked"></span>
                             {%else%}
                             <span class="fa fa-star "></span>
                             {%endif%}
-                            {%if 5 <= gd.guide_rating %}
+                            {%if 5 <= gd.guideinfo.rating %}
                             <span class="fa fa-star checked"></span>
                             {%else%}
                             <span class="fa fa-star "></span>
@@ -76,16 +85,16 @@
         </tbody>
         </table>
     </div>
-     {% csrf_token %}
-            </form>
-            <hr>
-            <form>
-                <label class="label">Question:-</label>
-                <textarea class="question" id="ques" cols="400" rows="6" placeholder="Type your question here"></textarea>
-                <input class="sbmtq" type="button" value="submit" onclick=sbmtqs() >
-            </form>
+    {% csrf_token %}
+    </form>
+    <hr>
+    <form>
+        <label class="label">Question:-</label>
+        <textarea class="question" id="ques" cols="400" rows="6" placeholder="Type your question here"></textarea>
+        <input class="sbmtq" type="button" value="submit" onclick=sbmtqs()>
+    </form>
 
-        </div>
+</div>
 </div>
 <script src="{% static 'jsgdlst.js' %}"></script>
 {% endblock content %}

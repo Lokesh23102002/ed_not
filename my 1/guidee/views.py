@@ -15,11 +15,12 @@ from .forms import Rvw_form
 def gdlst(request,field=None):
     if field==None:
         usr=User.objects.get(username=str(request.user))
-        gds=[]
+        rms=[]
         for rm in usr.guideeinfo.guidee_rooms.all():
-            gds+=[rm.guide]
+            if rm.status == "r":
+                rms+=[rm]
         lst_type="contact_lst"
-        return render(request,'guidee/gdlst.html',{'gds':gds,'usrinfo':usrinfo,'type':lst_type})
+        return render(request,'guidee/ongoing_queslst.html',{'rms':rms,'usrinfo':usrinfo,'type':lst_type})
     else:        
         fd=fields.objects.get(name=field)
         print(fd)

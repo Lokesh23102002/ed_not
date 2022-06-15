@@ -64,6 +64,8 @@ def dash(request):
         cert=Certificate.objects.get(certificate = field)
         cert.delete()
         print(field)
+    
+    
         
     if request.method == 'POST' and ('fields' in request.POST) and request.FILES.get('uploadd'):
         field=fields.objects.get(name=request.POST.get('fields'))
@@ -166,11 +168,27 @@ def guide(request):
             field.guidees.remove(request.user)
             field.save()
             request.user.usrinfo.save()
-        
-    
+        elif 'ch_connectmode' in request.POST: 
+            print('Yes')
+            if request.user.guideinfo.connectmode==0:
+                request.user.guideinfo.connectmode=1
+                request.user.guideinfo.save()
+
+            elif request.user.guideinfo.connectmode==1:
+                request.user.guideinfo.connectmode=0
+                request.user.guideinfo.save()
+    notseengderms = []
+    for rm in request.user.guideeinfo.guidee_rooms.all():
+        for mssg in rm.message_set.all():
+            print(mssg.status)
+            if mssg.status=="gd1":
+                print(rm)
+                print(mssg.mssg, mssg.status)
+                notseengderms +=[rm]
+                break
+
     guides = fields.objects.all()
-    context = {'fields':guides}
-    return render(request,"Guide.html",context)
+    return render(request,"Guide.html",{'fields':guides,'notseengderms':notseengderms})
     
 def sendmail(email,token):
     subject = "your account needs to be verified"

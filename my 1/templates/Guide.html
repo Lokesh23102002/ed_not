@@ -22,10 +22,20 @@
         <a href="guidee/{{i}}/guidelist">{{i}}</a>
       </div>
       {% endfor %}
+      
+
+
+        
+    
     </div>
 
   </div>
   <button id="guidee_field">Add Field</button>
+<a href="guidee/guidecontactlist">On going questions</a>
+   <h2>Guides messaged</h2>
+    {% for rm in notseengderms %}
+    <a href="chat/{{rm.guide}}?requestfrom=guidee&fd_no={{rm.fd.no}}&ques_id={{rm.ques.id}}">{{rm.guide}}_{{rm.fd.name}}_{{rm.ques.ques}}</a><br>
+    {%endfor%}
 
   <!--guidee section end-->
   <!--guide section start-->
@@ -44,9 +54,22 @@
       </div>
       {% endfor %}
     </div>
+    
   </div>
   <button id="guide_field">Add Field</button>
+
+        Connect mode:
+        <form action="" method="post">
+            
+            {% if user.guideinfo.connectmode == 0 %}
+            <input type="submit" name="ch_connectmode" value="on">
+            {% elif user.guideinfo.connectmode == 1 %}
+            <input type="submit" name="ch_connectmode" value="off">
+            {% endif %}
+            {% csrf_token %}
+    
 </div>
+     
 <!--guide section end-->
 <!--guide section new field-->
 <div id="guide_new" class="popup ">
