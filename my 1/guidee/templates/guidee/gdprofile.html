@@ -1,7 +1,9 @@
 {% extends "home.html" %}
 {% load static %}
 
-
+{%block head%}
+<link rel="stylesheet" href="{% static 'stgdprofile.css'%}">
+{%endblock head%}
 
 {% block content %}
 <div id="screen" class="screen ">
@@ -64,6 +66,31 @@
 
     <div class="pbox rating">
       <p>Review & Rating</p>
+      <div class="btm">
+            <div style="float: right;">  
+                <form action="" method="post">
+                <input type="submit" value="rate" name="rate">
+                <input type="text" name="rating">
+                {%csrf_token%}
+                </form>
+            </div>
+            <div >Review:-
+            </div>
+            <form action="" method="post" >
+            <div>
+                <textarea name="rvw" cols="200" rows="3" required="" id="id_rvw" placeholder="Your Review"></textarea>
+                <input type="submit" value="post" name="rvw_post" >
+            </div>
+            {%csrf_token%}
+            </form>
+            <button type="button" onclick=shrevs() >Show all reviews</button>
+        </div>
+        <div id="rvs">
+            {% for rvw in gd.guideinfo.rvws_received.all %}
+            <div class="revs revl">{{rvw.gde}}:-</div>
+            <div class="revs revl"><label>{{rvw.rvw}}</label></div>
+            {%endfor%}
+        </div>
     </div>
 
 

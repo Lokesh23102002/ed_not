@@ -83,10 +83,12 @@ class ChatConsumer(WebsocketConsumer):
                 elif user_role =="guidee":
                     mssg.status="gde1"
                 mssg.save()
-                print(mssg.status)
+                print(mssg)
                 break  
-        
+        name = 'lok'
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'message': msg
+            'message': msg, 'msg':msg_str, 'rec':receiver_txt,'time':sent_time
         }))
+
+        print(msg)
