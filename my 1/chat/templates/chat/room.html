@@ -91,7 +91,7 @@
     </script>
 
     {%block content%}
-    <div class="container">
+    <div id="main" class="container">
         <div class="row">
 
 
@@ -99,10 +99,8 @@
 
                 <div class="header-chat">
                     {% if user_role == "guide" %}
-                    <form action="" method="post">
-                        <input id="chat-closeroom" name="chat-closeroom" type="submit" value="Close the room">
-                        {%csrf_token%}
-                    </form>
+                    <button onclick="ans()">Close room</button>
+
                     {%endif%}
                     <i class="icon fa fa-user-o" aria-hidden="true"></i>
                     {%if room.guidee == user%}
@@ -146,81 +144,117 @@
             </section>
         </div>
     </div>
-    {{ user_role|json_script:"user_role"}}
-    {{ other_usr| json_script:"o_u" }}
-    {{ room.room_name|json_script:"room-name" }}
-    {{ user.username|json_script:"username" }}
-    <script>
-        $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight);
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-        const chatSocket = new WebSocket(
-            'ws://' +
-            window.location.host +
-            '/ws/chat/' +
-            roomName +
-            '/'
-        );
+    <!-- close window-->
+    <div id="ans" class="fieldnames hide">
 
-        chatSocket.onmessage = function (e) {
+
+        <div id="guide_new" class="popup ">
+
+            <div class="popupfornew">
+                <i onclick="rans()" id="closep" class="bx bx-x close"></i>
+                <h3>Provide final conclusion of conversation</h3>
+                <form method="post">
+
+                    <input id="textarea" name="ans" type="text" size="100"><br>
+                    <input id="ans-submit" name="ans-submit" type="submit" value="submit">
+                    {%csrf_token%}
+                </form>
+            </div>
+        </div>
+        <!--close window ends-->
+        {{ user_role|json_script:"user_role"}}
+        {{ other_usr| json_script:"o_u" }}
+        {{ room.room_name|json_script:"room-name" }}
+        {{ user.username|json_script:"username" }}
+        <script>
+            const answ = document.querySelector("#ans"),
+                ques = document.querySelector("#main");
+
+            function ans() {
+                answ.classList.remove("hide")
+
+                ques.classList.add("hide")
+
+            }
+
+            function rans() {
+                answ.classList.add("hide")
+                ques.classList.remove("hide")
+            }
+        </script>
+
+        <script>
             $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight);
-            const data = JSON.parse(e.data);
-            if (data.rec == '{{user}}') {
-                bubble = '<div class="message">' +
-                    '</div>' +
-                    '<p class="text">' + data.msg + '</p>' +
-                    '</div>' +
-                    '<p class="time">' + data.time + '</p>'
-            } else {
-                bubble = '<div class="message text-only">' +
-                    '<div class="response">' +
-                    '<p class="text">' + data.msg + '</p>' +
+            const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+            const chatSocket = new WebSocket(
+                'ws://' +
+                window.location.host +
+                '/ws/chat/' +
+                roomName +
+                '/'
+            );
+
+            chatSocket.onmessage = function (e) {
+                $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight);
+                const data = JSON.parse(e.data);
+                if (data.rec == '{{user}}') {
+                    bubble = '<div class="message">' +
+                        '</div>' +
+                        '<p class="text">' + data.msg + '</p>' +
+                        '</div>' +
+                        '<p class="time">' + data.time + '</p>'
+                } else {
+                    bubble = '<div class="message text-only">' +
+                        '<div class="response">' +
+                        '<p class="text">' + data.msg + '</p>' +
 
 
-                    '</div>' +
-                    '</div>'
+                        '</div>' +
+                        '</div>'
+                }
+                $('#chat-log').append(bubble)
+
+
+                console.error(e);
+
+
+            };
+
+            chatSocket.onclose = function (e) {
+                console.error('Chat socket closed unexpectedly');
+            };
+
+            document.querySelector('#chat-message-input').focus();
+            document.querySelector('#chat-message-input').onkeyup = function (e) {
+                if (e.keyCode === 13) { // enter, return
+                    document.querySelector('#chat-message-submit').click();
+
+                }
+            };
+
+            document.querySelector('#chat-message-submit').onclick = function (e) {
+                const messageInputDom = document.querySelector('#chat-message-input');
+                const usrname = JSON.parse(document.getElementById('username').textContent);
+                const receiver = JSON.parse(document.getElementById('o_u').textContent);
+                const user_role = JSON.parse(document.getElementById('user_role').textContent);
+                const room_name = JSON.parse(document.getElementById('room-name').textContent);
+                const message = messageInputDom.value;
+                const overall_message = message + "  -- " + usrname;
+
+                chatSocket.send(JSON.stringify({
+                    'overall_message': overall_message,
+                    'message': message,
+                    'receiver': receiver,
+                    'user_role': user_role,
+                    'room_name': room_name,
+                }));
+                messageInputDom.value = '';
+            };
+            document.querySelector('#chat-closeroom').onclick = function (e) {
+
             }
-            $('#chat-log').append(bubble)
+        </script>
 
-
-            console.error(e);
-
-
-        };
-
-        chatSocket.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function (e) {
-            if (e.keyCode === 13) { // enter, return
-                document.querySelector('#chat-message-submit').click();
-
-            }
-        };
-
-        document.querySelector('#chat-message-submit').onclick = function (e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const usrname = JSON.parse(document.getElementById('username').textContent);
-            const receiver = JSON.parse(document.getElementById('o_u').textContent);
-            const user_role = JSON.parse(document.getElementById('user_role').textContent);
-            const room_name = JSON.parse(document.getElementById('room-name').textContent);
-            const message = messageInputDom.value;
-            const overall_message = message + "  -- " + usrname;
-
-            chatSocket.send(JSON.stringify({
-                'overall_message': overall_message,
-                'message': message,
-                'receiver': receiver,
-                'user_role': user_role,
-                'room_name': room_name,
-            }));
-            messageInputDom.value = '';
-        };
-        document.querySelector('#chat-closeroom').onclick = function (e) {
-
-        }
-    </script>
-
-    {%endblock content%}
+        {%endblock content%}

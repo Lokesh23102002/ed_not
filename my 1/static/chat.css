@@ -10,6 +10,10 @@ body {
     height: 700px;
 }
 
+.hide {
+    display: none;
+}
+
 /* ===== MENU ===== */
 .menu {
     float: left;
