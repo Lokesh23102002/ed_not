@@ -2,6 +2,13 @@
 {% load static %}
 {%block head%}
 <link rel="stylesheet" href="{% static 'stgdeprofile.css'%}">
+<link rel="stylesheet" href="{% static 'listofguidesstyle.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  .checked {
+    color: orange;
+  }
+</style>
 {%endblock head%}
 {%block script%}
 <script>
@@ -88,7 +95,34 @@
       <div class="btm">
         <div style="float: right;">
           <form action="" method="post">
-            <input type="submit" value="rate" name="rate">
+            <div class="rating">
+              {%if 1 <= gde.guideeinfo.rating %}
+              <span class="fa fa-star checked"></span>
+              {%else%}
+              <span class="fa fa-star "></span>
+              {%endif%}
+              {%if 2 <= gde.guideeinfo.rating %}
+              <span class="fa fa-star checked"></span>
+              {%else%}
+              <span class="fa fa-star "></span>
+              {%endif%}
+              {%if 3 <= gde.guideeinfo.rating %}
+              <span class="fa fa-star checked"></span>
+              {%else%}
+              <span class="fa fa-star "></span>
+              {%endif%}
+              {%if 4 <= gde.guideeinfo.rating %}
+              <span class="fa fa-star checked"></span>
+              {%else%}
+              <span class="fa fa-star "></span>
+              {%endif%}
+              {%if 5 <= gde.guideeinfo.rating %}
+              <span class="fa fa-star checked"></span>
+              {%else%}
+              <span class="fa fa-star "></span>
+              {%endif%}
+
+            </div>
             <input type="text" name="rating">
             {%csrf_token%}
           </form>
