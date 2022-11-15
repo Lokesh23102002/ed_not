@@ -25,14 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0kzy#djxp@hx^j2c1(c@8esq8v0!$p2mpqyz!kx**ad0!@mwx$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'chat.apps.ChatConfig',
+    'guide.apps.GuideConfig',
     'calc.apps.CalcConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'guidee.apps.GuideeConfig',
 ]
 
 MIDDLEWARE = [
@@ -72,9 +76,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'my.wsgi.application'
 
+ASGI_APPLICATION= 'my.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    },
+}
+
 
 DATABASES = {
     'default': {
@@ -82,6 +94,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
@@ -120,9 +133,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directory where uploaded media is saved.
 MEDIA_URL = '/media/' # Public URL at the browse
@@ -138,4 +148,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'eazyguidance@gmail.com'
 EMAIL_HOST_PASSWORD = 'ygduihnpresjkold'
+
+# for preview of documents using iframe embeded etc
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 

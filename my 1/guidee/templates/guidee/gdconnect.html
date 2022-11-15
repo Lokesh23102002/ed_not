@@ -1,0 +1,124 @@
+{% extends "home.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'stgdconnect.css' %}">
+    <title>Q&A by guide</title>
+</head>
+
+<body>
+
+    <div class="ques">
+        <p style="text-align:left;padding-top:0%">{{ques}}</p>
+    </div>
+    <div>
+        <hr>
+    </div>
+    <div class="qac">
+        <div class="qa">
+            <div class=" qai qa1">
+                <p class="q">Question</p>
+                <p class="a">Answer</p>
+            </div>
+            <div class=" qai qa2">
+                <p class="q">Question</p>
+                <p class="a">Answer</p>
+            </div>
+            <div class=" qai qa3">
+                <p class="q">Question</p>
+                <p class="a">Answer</p>
+            </div>
+            <div class=" qai qa4">
+                <p class="q">Question</p>
+                <p class="a">Answer</p>
+            </div>
+            <div class=" qai qa5">
+                <p class="q">Question</p>
+                <p class="a">Answer</p>
+            </div>
+            <div class=" qai qa6">
+                <p class="q">Question</p>
+                <p class="a">Answer</p>
+            </div>
+        </div>
+        <div class="cnct">
+            <div class="cncti cnctm">
+                {% if gd.guide_connectmode == 0 %}
+                {% if not connect_asked %}
+                <span>Connect mode :- Not ready to contact </span>
+                <form action="" method="post">
+                    <input type="submit" value="connect" name="connect">
+                    {%csrf_token%}
+                </form>
+                {%else%}
+                <span>Connect mode :- Not ready to contact </span>
+                <form action="" method="post">
+                    <input type="submit" value="disconnect" name="disconnect">
+                    {%csrf_token%}
+                </form>
+                {%endif%}
+                {%else%}
+                <span>Connect mode :- Ready to contact </span>
+                {%endif%}
+            </div>
+            <button type="button" value="Chat" class="btn btnch">Chat</button>
+
+        </div>
+</body>
+
+</html>
+{% block head %}
+<link rel="stylesheet" href="{% static 'stgdconnect.css' %}">
+<title>Q&A by guide</title>
+{% endblock head %}
+{% block content %}
+
+<body>
+
+    <div class= "ques">
+            <p style="text-align:left;padding-top:0%">{{ques.ques}}</p>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class= "qac">
+            <div class="qa">
+               {% for q in related_ques %}
+                <div class=" qai qa1">
+                    <p class="q">{{ques.ques}}</p>
+                    <p class="a">Answer:-{{ques.ans}}</p>
+                </div>
+                {% endfor %}
+                
+            </div>
+            <div class="cnct">
+                <div class="cncti cnctm">
+                    {% if gd.guideinfo.connectmode == 0 %}
+                    <span>Connect mode :- Not ready to contact </span>
+                    {%else%}
+                    <span>Connect mode :- Ready to contact </span>
+                    {%endif%}
+                    <form action="" method="post">
+                    {% if not ques_sent %}
+                    <input type="submit" value="send question" name="sending_ques">
+                    {%csrf_token%}
+                    {%else%}
+                    <input type="submit" value="unsend question" name="unsending_ques">
+                    {%csrf_token%}
+                    </form>
+                    {%endif%}
+                    
+                </div>
+                <button type="button" value="Chat" class="btn btnch" onclick=chat()>Chat</button>
+
+            </div>
+            {{ gd.guideinfo.connectmode|json_script:"c_m" }}
+            {{ gd.username|json_script:"gd" }}
+            {{ fd.no|json_script:"fd_no" }}
+            {{ ques.id|json_script:"ques_id" }}
+
+            <script src="{%static 'jsgdconnect.js'%}"></script></body>
+
+{% endblock content %}

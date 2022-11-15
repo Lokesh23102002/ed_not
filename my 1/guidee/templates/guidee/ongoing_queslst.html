@@ -1,0 +1,81 @@
+{% extends "home.html" %}
+{%load static%}
+<Doctype! html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{%static 'stgdlst.css'%}" type="text/css">
+        <title>
+            Ongoing Questions
+        </title>
+    </head>
+
+    <body>
+       
+        <div class="header">
+            <h1 class="cnctlstheader">On going questions</h1>
+            <br>
+            <h2 class="guides"> Questions </h2>
+        </div>
+        <hr>
+        <div>
+            <form action="" method="post" novalidate>
+            <table class="list">
+                <tr class="row">
+                    <th class="name">Guide</th>
+                    <th class="level">Field</th>
+                    <th class="Qual">Question</th>
+                    <th class="rating">Time asked</th>
+                </tr>
+                {%for rm in rms%}
+                <tr>                    
+                    <td class="name"><a href="/chat/{{rm.guide}}?requestfrom=guidee&fd_no={{rm.fd.no}}&ques_id={{rm.ques.id}}">{{rm.guide}}</a></td>        
+                    <td>{{rm.fd}}</td>
+                    <td class="Qual">{{rm.ques.ques}}</td>
+                    <td>{{rm.time_asked}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+            {% csrf_token %}
+            </form>
+            <hr>
+
+        </div>
+        <script src="{% static 'jsgdlst.js' %}"></script>
+    </body>
+
+    </html>
+
+    {%block content%}
+    
+        <div class="header">
+            <h1 class="cnctlstheader">On going questions</h1>
+            <br>
+            <h2 class="guides"> Questions </h2>
+        </div>
+        <hr>
+        <div>
+            <form action="" method="post" novalidate>
+            <table class="list">
+                <tr class="row">
+                    <th class="name">Guide</th>
+                    <th class="level">Field</th>
+                    <th class="Qual">Question</th>
+                    <th class="rating">Time asked</th>
+                </tr>
+                {%for rm in rms%}
+                <tr>                    
+                    <td class="name"><a href="/chat/{{rm.guide}}?requestfrom=guidee&fd_no={{rm.fd.no}}&ques_id={{rm.ques.id}}">{{rm.guide}}</a></td>        
+                    <td>{{rm.fd}}</td>
+                    <td class="Qual">{{rm.ques.ques}}</td>
+                    <td>{{rm.time_asked}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+            {% csrf_token %}
+            </form>
+            <hr>
+
+        </div>
+        <script src="{% static 'jsgdlst.js' %}"></script>
+    {%endblock content%}

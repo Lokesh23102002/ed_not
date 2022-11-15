@@ -1,0 +1,166 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styleguide.css' %}">{% endblock head %}
+{% block content %}
+
+<div id="main_content" class="main">
+  <!--guidee section-->
+  <div class="heading">
+    <h1>Guidee</h1>
+  </div>
+  <div class="fieldnames">
+    <div class="list">
+      {% for i in user.guideeinfo.fds.all %}
+      <div class="ele">
+        <form action="" class="remform" method="post">{% csrf_token %}<button id="close" class="bx bx-x close"
+            name="remn" value="{{i}}">
+          </button></form>
+
+
+        <a href="guidee/{{i}}/guidelist">{{i}}</a>
+      </div>
+      {% endfor %}
+      
+
+
+        
+    
+    </div>
+
+  </div>
+
+  <button id="guidee_field">Add Field</button>
+
+<a href="guidee/guidecontactlist">On going questions</a>
+   <h2>Guides messaged</h2>
+    {% for rm in notseengderms %}
+    <a href="chat/{{rm.guide}}?requestfrom=guidee&fd_no={{rm.fd.no}}&ques_id={{rm.ques.id}}">{{rm.guide}}_{{rm.fd.name}}_{{rm.ques.ques}}</a><br>
+    {%endfor%}
+
+  <!--guidee section end-->
+  <!--guide section start-->
+  <div class="heading">
+    <h1>Guide</h1>
+  </div>
+
+  <div class="fieldnames">
+
+    <div class="list">
+      {% for i in user.guideinfo.fds.all %}
+      
+      <div class="ele">
+        <form action="" class="remform" method="post"> {% csrf_token %} <button id="close" class="bx bx-x close"
+            name="remx" value="{{i}}"></button></form><a href="guide/{{i}}/guidees_contacted?show=new">{{i}}</a>
+      </div>
+      {% endfor %}
+    </div>
+    
+  </div>
+  <button id="guide_field">Add Field</button>
+
+        Connect mode:
+        <form action="" method="post">
+            
+            {% if user.guideinfo.connectmode == 0 %}
+            <input type="submit" name="ch_connectmode" value="on">
+            {% elif user.guideinfo.connectmode == 1 %}
+            <input type="submit" name="ch_connectmode" value="off">
+            {% endif %}
+            {% csrf_token %}
+    
+</div>
+     
+<!--guide section end-->
+<!--guide section new field-->
+<div id="guide_new" class="popup ">
+
+  <div class="popupfornew">
+    <i id="closep" class="bx bx-x close"></i>
+    <h3>Select fields To guide</h3>
+    <form method="post">
+      {% csrf_token %}
+      <ul>
+
+
+        {%for i in fields.all%}
+        {% if i not in user.guideinfo.fds.all  %}
+        <li>
+          <label for="">{{i}}</label>
+          <input id="checkbox" type="checkbox" value='{{i}}' name='fdsexpert' class="option"><br>
+        </li>
+        {% endif %}
+        {%endfor%}
+
+      </ul>
+
+
+
+      <input type='submit' name='submitx' value='Submit'>
+    </form>
+  </div>
+</div>
+<!--guide section new field end-->
+<!--guidee section new field -->
+
+<div id="guidee_new" class="popup ">
+  <div class="popupfornew">
+    <i id="closep" class="bx bx-x close"></i>
+    <h3>Fields in which you want guidance</h3>
+    <form method="post">
+      <ul>
+        {% csrf_token %}
+
+        {%for i in fields.all%}
+        {% if i not in user.guideeinfo.fds.all  %}
+        <li> <label for="">{{i}}</label>
+          <input id="checkbox" type="checkbox" value='{{i}}' name='fdsneeded' class="option"><br>
+        </li>
+        {% endif %}
+        {%endfor%}
+      </ul>
+
+      <input type='submit' name='submitn' value='Submit'>
+    </form>
+  </div>
+</div>
+<!--guide section new field end-->
+<script>
+  const guide_add = document.querySelector("#guide_new"),
+    guidee_add = document.querySelector("#guidee_new"),
+    guide_butt = document.querySelector("#guide_field"),
+    guidee_butt = document.querySelector("#guidee_field"),
+    closeBtng = document.querySelectorAll("#closep"),
+    mainc = document.querySelector("#main_content"),
+    check = document.querySelectorAll("#checkbox");
+
+
+   var checkboxes = document.getElementsByName('fdsexpert');
+
+
+   guide_butt.addEventListener("click", () => {
+    guide_add.classList.add("open");
+    mainc.classList.add("closem");
+   });
+
+  guidee_butt.addEventListener("click", () => {
+    guidee_add.classList.add("open");
+    mainc.classList.add("closem");
+    check.checked = false;
+  });
+
+  closeBtng.forEach(cBtn => {
+    cBtn.addEventListener("click", () => {
+      guidee_add.classList.remove("open");
+      guide_add.classList.remove("open");
+      mainc.classList.remove("closem");
+
+      for (var checkbox of checkboxes) {
+        checkbox.checked = false;
+      }
+
+    });
+  });
+</script>
+{% endblock content %}

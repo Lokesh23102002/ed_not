@@ -1,0 +1,2 @@
+mod-wsgi==4.9.4
+module-name==0.5.1

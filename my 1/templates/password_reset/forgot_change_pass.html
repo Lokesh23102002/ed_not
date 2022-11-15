@@ -1,0 +1,11 @@
+ {% extends 'Signin.html' %}
+
+ {% block signin %}
+ <h1>Enter new password</h1>
+ <form method='POST'>
+     {% csrf_token %}
+     {{form}}
+     <button id="button" class="click" value='Change Password'>Change password</button>
+
+ </form>
+ {% endblock signin %}

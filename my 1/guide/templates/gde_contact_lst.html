@@ -1,0 +1,63 @@
+{% extends "home.html" %}
+{%load static%}
+
+
+{% block head %}
+<link rel="stylesheet" href="{%static 'stgde_contact_lst.css'%}">
+<title>List of Guides</title>
+
+{% endblock head %}
+
+
+
+
+
+{%block content%}
+
+<body>
+
+    <div class="header">
+        <h1 class="field">{{fd}} </h1>
+        <br>
+        <h2 class="guidees"> Guidees </h2>
+    </div>
+    <div class="show_options">
+        <a href="/guide/{{fd}}/guidees_contacted?show=not seen"><u>Not seen</u> </a>
+        <a href="/guide/{{fd}}/guidees_contacted?show=all"><u>All</u></a>
+        {% if new %}
+        <a href="/guide/{{fd}}/guidees_contacted?show=new"><u>New</u></a>
+        {% endif %}
+        <a href="/guide/{{fd}}/guidees_contacted?show=chat_gde"><u>Chatted guidees</u></a>
+    </div>
+    <hr>
+    <div>
+
+        <table class="list">
+            <tr class="row">
+                <th class="name">Name</th>
+                <th class="rating">Rating</th>
+            </tr>
+            {% if type == 'chat' %}
+           {% for rm in rms %}
+                <tr class="r">
+                    <td class="name"><a href="/chat/{{rm.guide}}?requestfrom=guidee&fd_no={{rm.fd.no}}&ques_id={{rm.ques.id}}" class="a" >{{rm.guidee.username}}</a></td>
+                    <td>{{rm.ques.ques}}</td>
+                </tr>
+                {%endfor%}
+            {% elif type == 'ques' %}
+            {%for ques in questions%}
+            <tr class="r">
+                <td class="name"><a href="../{{fd}}/guidee/{{ques.guidee}}?ques={{ques.ques}}"
+                        class="a">{{ques.guidee}}</a></td>
+                <td>{{ques.guidee.guideeinfo.rating}}</td>
+            </tr>
+            <tr class="rq">
+                <td colspan="2">{{ques.ques}}</td>
+            </tr>
+            {%endfor%}
+            {% endif %}
+        </table>
+        <hr>
+    </div>
+</body>
+{%endblock content%}

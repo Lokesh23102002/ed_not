@@ -1,0 +1,102 @@
+{% extends "home.html" %}
+{% load static %}
+
+{%block head%}
+<link rel="stylesheet" href="{% static 'stgdprofile.css'%}">
+{%endblock head%}
+
+{% block content %}
+<div id="screen" class="screen ">
+  <div class="heading">
+    <h1>Profile</h1>
+  </div>
+  <div id="mainc">
+    <div class="pbox certificate">
+      <div class="headingcert">
+        Certificates
+      </div>
+      {%for i in gd.certificate_set.all%}
+      <p>{{i.fd}}
+      </p>
+      <embed src="{{i.certificate.url}}" width="100%" height="200px" />
+      {%endfor%}
+
+    </div>
+    <div class="pbox general">
+
+      <div class="main-content">
+        <div class="pimage" id="profile_image" onclick="">
+          <img src="{{ gd.usrinfo.image.url }}" alt=""></div>
+
+
+        <div class="text-info">
+          <h2>{{ gd.first_name }} {{ gd.last_name }}</h2>
+          <div class="contact">
+
+            <div class="table"><label for=""><strong>Email:-</strong></label><br>
+              <p>{{ gd.email }}</p>
+            </div>
+            <div class="table"><label for=""><strong>Phone no:-</strong></label><br>
+              <p>+91 {{ gd.usrinfo.mobile }}</p>
+            </div>
+            <div class="table"><label for=""><strong>DOB:-</strong></label><br>
+              <p>{{ gd.usrinfo.birthday|date:"d,F,Y" }}
+            </div>
+            <div class="ques">
+              <form action="" method="post">
+                <label for=""> Question:-</label>
+                <br>
+                <textarea class="in" name="question" id="id_question" rows="11"
+                  placeholder="Type your Question here"></textarea>
+                <br>
+                <input class="sbmt" type="button" value="submit" name="ques_submit" onclick=qagf()>
+                {%csrf_token%}
+              </form>
+            </div>
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <div class="pbox rating">
+      <p>Review & Rating</p>
+      <div class="btm">
+            <div style="float: right;">  
+                <form action="" method="post">
+                <input type="submit" value="rate" name="rate">
+                <input type="text" name="rating">
+                {%csrf_token%}
+                </form>
+            </div>
+            <div >Review:-
+            </div>
+            <form action="" method="post" >
+            <div>
+                <textarea name="rvw" cols="200" rows="3" required="" id="id_rvw" placeholder="Your Review"></textarea>
+                <input type="submit" value="post" name="rvw_post" >
+            </div>
+            {%csrf_token%}
+            </form>
+            <button type="button" onclick=shrevs() >Show all reviews</button>
+        </div>
+        <div id="rvs">
+            {% for rvw in gd.guideinfo.rvws_received.all %}
+            <div class="revs revl">{{rvw.gde}}:-</div>
+            <div class="revs revl"><label>{{rvw.rvw}}</label></div>
+            {%endfor%}
+        </div>
+    </div>
+
+
+  </div>
+</div>
+
+<Script src="{%static 'js.js' %}"></Script>
+
+{%endblock content%}

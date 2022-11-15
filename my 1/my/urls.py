@@ -20,5 +20,8 @@ from django.urls import path,include
 
 urlpatterns = [
     path('',include('calc.urls')),
+    path('guidee/',include('guidee.urls')),
+    path('guide/',include('guide.urls')),
+    path('chat/',include('chat.urls')),
     path('admin/', admin.site.urls),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

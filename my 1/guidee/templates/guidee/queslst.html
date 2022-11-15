@@ -1,0 +1,98 @@
+{% extends "home.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'stqueslst.css' %}">
+        <title>Q&A by guide</title>
+    </head>
+    <body>
+        <div class= "ques">
+            <p style="text-align:left;padding-top:0%">{{ques}}</p>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class= "qac">
+            <div class="qa">
+                {% for q in related_ques %}
+                <div class="gi gi1">
+                    <p class="gie gn gn1" ><button id="{{q.guide}}" onclick=pogf(this.id) >{{q.guide}}</button></p>
+                    <p class="gie gq gq1">B.tech IIT</p>
+                    <p class="gie gl gl1">{{q.guide.guideinfo.level}}</p>
+                    <p class="gie gr gr1">{{q.guide.guideinfo.rating}}</p>
+                </div>
+                <div class=" qai qa1">
+                    <p class="qe">{{q.ques}}</p>
+                    <p class="ab">Answer:-{{q.ans}}</p>
+                </div>
+                {%endfor%}
+            </div>
+            {{ fd.name| json_script:'fd'}}
+        <script src="{% static 'jsqueslst.js' %}">
+        </script>
+    </body>
+</html>
+
+{%block head%}
+  <link rel="stylesheet" href="{% static 'stqueslst.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .checked {
+        color: orange;
+    }
+</style>
+{%endblock head%}
+{%block content%}
+      <div class= "ques">
+            <p style="text-align:left;padding-top:0%">{{ques}}</p>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class= "qac">
+            <div class="qa">
+                {% for q in related_ques %}
+                <div class="gi gi1">
+                    <p class="gie gn gn1" ><button id="{{q.guide}}" onclick=pogf(this.id) >{{q.guide}}</button></p>
+                    <p class="gie gq gq1">B.tech IIT</p>
+                    <p class="gie gl gl1">{{q.guide.guideinfo.level}}</p>
+                    <p class="gie gr gr1">
+                        {%if 1 <= q.guide.guideinfo.rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                            {%endif%}
+                            {%if 2 <= q.guide.guideinfo.rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                            {%endif%}
+                            {%if 3 <= q.guide.guideinfo.rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                            {%endif%}
+                            {%if 4 <= q.guide.guideinfo.rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                            {%endif%}
+                            {%if 5 <= q.guide.guideinfo.rating %}
+                            <span class="fa fa-star checked"></span>
+                            {%else%}
+                            <span class="fa fa-star "></span>
+                            {%endif%}
+                    </p>
+
+                </div>
+                <div class=" qai qa1">
+                    <p class="qes">{{q.ques}}</p>
+                    <p class="abe">Answer:-{{q.ans}}</p>
+                </div>
+                {%endfor%}
+            </div>
+            {{ fd.name| json_script:'fd'}}
+        <script src="{% static 'jsqueslst.js' %}">
+        </script>
+{%endblock content%}

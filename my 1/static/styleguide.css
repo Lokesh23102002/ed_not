@@ -1,0 +1,122 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main.closem {
+    display: none;
+}
+
+.popup.open .main {
+    display: none;
+}
+
+
+
+.fieldnames {
+    display: flex;
+
+
+    margin-left: 160px;
+    margin-right: 160px;
+}
+
+.popup {
+    display: none;
+}
+
+.popup.open {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(213, 206, 206, 0.4);
+
+}
+
+.popupfornew {
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    background-color: white;
+    flex-direction: column;
+    display: flex;
+    min-height: 40vh;
+    max-height: 70vh;
+    width: 50vh;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.fieldnames .list {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+
+.fieldnames .list .ele {
+
+    display: inline;
+}
+
+.fieldnames a:link,
+a:visited {
+
+    background-color: #f286dc;
+
+    color: black;
+    margin-left: -15px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    padding-top: 30px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.fieldnames a:hover,
+a:active {
+    background-image: linear-gradient(#f286dc, #790246);
+}
+
+.list .ele .close {
+    background: none;
+    border: none;
+    position: relative;
+    top: -20px;
+    right: -85px;
+    font-size: 24px;
+    color: #5c4f4f;
+    cursor: pointer;
+}
+
+.list .ele .close:hover {
+    background-color: rgb(219, 230, 230);
+    color: #000000;
+    border-radius: 50%;
+    backdrop-filter: 0.;
+}
+
+.popup .popupfornew .close {
+    position: relative;
+    top: -45px;
+    right: -150px;
+    font-size: 24px;
+    color: #5c4f4f;
+    cursor: pointer;
+}
+
+.remform {
+    display: inline;
+}

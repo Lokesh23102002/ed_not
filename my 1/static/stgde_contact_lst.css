@@ -1,0 +1,95 @@
+th,
+td {
+    padding-right: 10%;
+    background-color: antiquewhite;
+}
+
+.row {
+    border: 2px solid black;
+    padding-bottom: 10%;
+    height: 5%;
+}
+
+.name {
+    background-color: rgb(251, 251, 251);
+    width: 30%;
+}
+
+.rating {
+    width: 20%;
+}
+
+.ques {
+    width: 100%;
+    height: 20%;
+    border: 1px solid black;
+    text-align: left;
+}
+
+.label {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.list {
+    width: 50%;
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+.guides,
+.field {
+    padding: 0%;
+}
+
+
+
+.guides {
+    border: 1px solid black;
+    margin-bottom: 0%;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+a:hover {
+    text-decoration: none;
+    background-color: aliceblue;
+    border-style: outset;
+    width: 20%;
+
+}
+
+.r {
+    height: 2em;
+}
+
+.rq {
+    height: 4em;
+}
+
+.row {
+    height: 3em;
+}
+
+.top {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 0%;
+}
+
+
+.table_q {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+}
